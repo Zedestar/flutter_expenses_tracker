@@ -1,4 +1,5 @@
 import 'package:expenses_tracker/components/expenses_list_builder.dart';
+import 'package:expenses_tracker/components/inputing_expense_widget.dart';
 import 'package:expenses_tracker/data/expenses_data.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,7 @@ class _ExpensesState extends State<Expenses> {
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
-        return Center(
-          child: Text(
-            "This is modal navigation sheet",
-          ),
-        );
+        return AddingExpenses();
       },
     );
   }
