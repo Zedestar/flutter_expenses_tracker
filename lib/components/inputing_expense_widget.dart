@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/components/alert_dialogy.dart';
 import 'package:expenses_tracker/model/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ class _AddingExpensesState extends State<AddingExpenses> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? theDatePicked;
+  Category? _cagorySelected;
 
   @override
   void dispose() {
@@ -39,6 +41,18 @@ class _AddingExpensesState extends State<AddingExpenses> {
     setState(() {
       theDatePicked = pickedDate;
     });
+  }
+
+  void _validateForm() {
+    final theAmount = double.tryParse(_amountController.text);
+    final invalidAmount = theAmount == null || theAmount < 0;
+    if (invalidAmount ||
+        _titleController.text.trim().isEmpty ||
+        theDatePicked == null ||
+        _cagorySelected == null) {
+      showInvalidInputDialog(context);
+      return;
+    }
   }
 
   @override
@@ -93,18 +107,33 @@ class _AddingExpensesState extends State<AddingExpenses> {
               ),
             ],
           ),
+          DropdownButton(
+            hint: Text(
+              _cagorySelected == null
+                  ? "Choose category"
+                  : _cagorySelected.toString().toUpperCase(),
+            ),
+            items: Category.values
+                .map(
+                  (element) => DropdownMenuItem(
+                    value: element,
+                    child: Text(
+                      element.name.toUpperCase(),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (element) {
+              setState(() {
+                _cagorySelected = element;
+              });
+            },
+          ),
           Spacer(),
           Row(
             children: [
               ElevatedButton(
-                onPressed: () {
-                  print(
-                    _titleController.text,
-                  );
-                  print(
-                    _amountController.text,
-                  );
-                },
+                onPressed: _validateForm,
                 child: Text(
                   "Add Expenses",
                 ),
