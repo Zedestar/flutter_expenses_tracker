@@ -30,15 +30,20 @@ class ExpenseItem extends StatelessWidget {
                 ),
               ],
             ),
-            Spacer(),
+            // Spacer(),
             Row(
               children: [
                 Text(
                   expense.category.toString(),
                 ),
                 Spacer(),
-                Text(
-                  expense.date.toString(),
+                Row(
+                  children: [
+                    Icon(categoricalItem[expense.category]),
+                    Text(
+                      expense.formattedFDate,
+                    ),
+                  ],
                 ),
               ],
             ),

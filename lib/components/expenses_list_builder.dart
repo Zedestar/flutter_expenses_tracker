@@ -14,7 +14,7 @@ class ExpensesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("List expenses"),
+        // Text("List expenses"),
         Expanded(
           child: ListView.builder(
             itemCount: expenses.length,
