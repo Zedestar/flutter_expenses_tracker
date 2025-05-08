@@ -20,4 +20,16 @@ class ExpensesListProvider with ChangeNotifier {
   List<Expense> get getExpensesList {
     return _expensesList;
   }
+
+  void addExpensesInExpensesList({
+    required String title,
+    required double amount,
+    required DateTime date,
+    required Category category,
+  }) {
+    Expense newExpense =
+        Expense(title: title, amount: amount, date: date, category: category);
+    _expensesList.add(newExpense);
+    notifyListeners();
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:expenses_tracker/components/alert_dialogy.dart';
 import 'package:expenses_tracker/model/expense.dart';
+import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class AddingExpenses extends StatefulWidget {
   const AddingExpenses({super.key});
@@ -15,7 +17,7 @@ class _AddingExpensesState extends State<AddingExpenses> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? theDatePicked;
-  Category? _cagorySelected;
+  Category? _categorySelected;
 
   @override
   void dispose() {
@@ -43,16 +45,28 @@ class _AddingExpensesState extends State<AddingExpenses> {
     });
   }
 
-  void _validateForm() {
+  void _validateFormAnsSaveData() {
     final theAmount = double.tryParse(_amountController.text);
     final invalidAmount = theAmount == null || theAmount < 0;
     if (invalidAmount ||
         _titleController.text.trim().isEmpty ||
         theDatePicked == null ||
-        _cagorySelected == null) {
+        _categorySelected == null) {
       showInvalidInputDialog(context);
       return;
     }
+    // Calling the item to add the item
+    final expensesProviderConnector = Provider.of<ExpensesListProvider>(
+      context,
+      listen: false,
+    );
+    expensesProviderConnector.addExpensesInExpensesList(
+      title: _titleController.text.trim(),
+      amount: theAmount,
+      date: theDatePicked!,
+      category: _categorySelected!,
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -109,9 +123,9 @@ class _AddingExpensesState extends State<AddingExpenses> {
           ),
           DropdownButton(
             hint: Text(
-              _cagorySelected == null
+              _categorySelected == null
                   ? "Choose category"
-                  : _cagorySelected.toString().toUpperCase(),
+                  : _categorySelected.toString().toUpperCase(),
             ),
             items: Category.values
                 .map(
@@ -125,7 +139,7 @@ class _AddingExpensesState extends State<AddingExpenses> {
                 .toList(),
             onChanged: (element) {
               setState(() {
-                _cagorySelected = element;
+                _categorySelected = element;
               });
             },
           ),
@@ -133,7 +147,7 @@ class _AddingExpensesState extends State<AddingExpenses> {
           Row(
             children: [
               ElevatedButton(
-                onPressed: _validateForm,
+                onPressed: _validateFormAnsSaveData,
                 child: Text(
                   "Add Expenses",
                 ),
