@@ -75,93 +75,95 @@ class _AddingExpensesState extends State<AddingExpenses> {
       padding: EdgeInsets.all(
         16,
       ),
-      child: Column(
-        children: [
-          TextField(
-            maxLength: 50,
-            controller: _titleController,
-            decoration: InputDecoration(
-              hintText: "Enter the kind of expenses",
-              label: Text("Expenses"),
+      child: Center(
+        child: Column(
+          children: [
+            TextField(
+              maxLength: 50,
+              controller: _titleController,
+              decoration: InputDecoration(
+                hintText: "Enter the kind of expenses",
+                label: Text("Expenses"),
+              ),
             ),
-          ),
-          Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _amountController,
-                  decoration: InputDecoration(
-                    hintText: "Enter the amount",
-                    prefixText: "\$",
-                    label: Text("Amount"),
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _amountController,
+                    decoration: InputDecoration(
+                      hintText: "Enter the amount",
+                      prefixText: "\$",
+                      label: Text("Amount"),
+                    ),
                   ),
                 ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        theDatePicked == null
+                            ? "No date selected"
+                            : formatter.format(theDatePicked!),
+                      ),
+                      IconButton(
+                        onPressed: _showDatePicker,
+                        icon: Icon(
+                          Icons.calendar_month,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            DropdownButton(
+              hint: Text(
+                _categorySelected == null
+                    ? "Choose category"
+                    : _categorySelected.toString().toUpperCase(),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      theDatePicked == null
-                          ? "No date selected"
-                          : formatter.format(theDatePicked!),
-                    ),
-                    IconButton(
-                      onPressed: _showDatePicker,
-                      icon: Icon(
-                        Icons.calendar_month,
+              items: Category.values
+                  .map(
+                    (element) => DropdownMenuItem(
+                      value: element,
+                      child: Text(
+                        element.name.toUpperCase(),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          DropdownButton(
-            hint: Text(
-              _categorySelected == null
-                  ? "Choose category"
-                  : _categorySelected.toString().toUpperCase(),
+                  )
+                  .toList(),
+              onChanged: (element) {
+                setState(() {
+                  _categorySelected = element;
+                });
+              },
             ),
-            items: Category.values
-                .map(
-                  (element) => DropdownMenuItem(
-                    value: element,
-                    child: Text(
-                      element.name.toUpperCase(),
-                    ),
+            Spacer(),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: _validateFormAnsSaveData,
+                  child: Text(
+                    "Add Expenses",
                   ),
-                )
-                .toList(),
-            onChanged: (element) {
-              setState(() {
-                _categorySelected = element;
-              });
-            },
-          ),
-          Spacer(),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: _validateFormAnsSaveData,
-                child: Text(
-                  "Add Expenses",
                 ),
-              ),
-              Spacer(),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Cancel"),
-              ),
-            ],
-          )
-        ],
+                Spacer(),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancel"),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

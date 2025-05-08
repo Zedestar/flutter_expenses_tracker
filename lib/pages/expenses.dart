@@ -14,6 +14,7 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   void _showTheModalSheet() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (ctx) {
         return AddingExpenses();
