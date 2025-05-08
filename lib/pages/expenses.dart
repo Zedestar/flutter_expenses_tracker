@@ -41,8 +41,8 @@ class _ExpensesState extends State<Expenses> {
         ],
       ),
       body: ExpensesList(
-        expenses: expensesData,
-      ),
+          // expenses: expensesData,
+          ),
     );
   }
 }
