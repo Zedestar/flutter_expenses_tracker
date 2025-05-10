@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:expenses_tracker/model/expense.dart';
 import 'package:flutter/material.dart';
 
@@ -29,8 +27,12 @@ class ExpensesListProvider with ChangeNotifier {
       required double amount,
       required DateTime date,
       required Category category}) {
-    Expense newExpense =
-        Expense(title: title, amount: amount, date: date, category: category);
+    Expense newExpense = Expense(
+      title: title,
+      amount: amount,
+      date: date,
+      category: category,
+    );
     _expensesList.add(newExpense);
     notifyListeners();
   }
