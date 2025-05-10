@@ -32,9 +32,8 @@ class ExpensesList extends StatelessWidget {
                     final Expense theItemToBeRemoved =
                         expensesItem.getExpensesList[index];
                     final int theRemovedIndex = index;
-                    expensesProviderConnector.removeExpensesInExpensesList(
-                        // expensesItem.getExpensesList[index],
-                        theItemToBeRemoved);
+                    expensesProviderConnector
+                        .removeExpensesInExpensesList(theItemToBeRemoved);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -49,18 +48,17 @@ class ExpensesList extends StatelessWidget {
                         ),
                         duration: Duration(seconds: 3),
                         margin: EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 10.0),
+                          horizontal: 16.0,
+                          vertical: 10.0,
+                        ),
                         action: SnackBarAction(
                           label: 'UNDO',
                           textColor: Colors.white,
                           onPressed: () {
-                            // final Expense expense =
-                            //     expensesItem.getExpensesList[index];
-                            // final int theItemIndex =
-                            //     expensesItem.getExpensesList.indexOf(expense);
                             expensesProviderConnector.insertTheDeletedItem(
-                                index: theRemovedIndex,
-                                expense: theItemToBeRemoved);
+                              index: theRemovedIndex,
+                              expense: theItemToBeRemoved,
+                            );
                           },
                         ),
                       ),
