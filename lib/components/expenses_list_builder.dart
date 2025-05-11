@@ -21,22 +21,28 @@ class ExpensesList extends StatelessWidget {
     );
     return Column(
       children: [
+        Text(
+          "Expenses Chart",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         SizedBox(
-          height: 300,
+          height: 250,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceAround,
-                maxY: expensesProviderConnector.expensesAmount[0],
+                maxY: 10,
                 barTouchData: BarTouchData(enabled: true),
                 titlesData: FlTitlesData(
                   bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
-                        const labels = Category
-                            .values; //['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+                        const labels = Category.values;
                         return Text(
                           labels[value.toInt()]
                               .toString()
@@ -62,7 +68,9 @@ class ExpensesList extends StatelessWidget {
                 barGroups: [
                   BarChartGroupData(x: 0, barRods: [
                     BarChartRodData(
-                      toY: expensesProviderConnector.expensesAmount[1],
+                      toY: (expensesProviderConnector.expensesAmount[1] /
+                              expensesProviderConnector.expensesAmount[0]) *
+                          10,
                       color: Colors.green,
                       width: 40,
                       borderRadius: BorderRadius.only(
@@ -73,7 +81,9 @@ class ExpensesList extends StatelessWidget {
                   ]),
                   BarChartGroupData(x: 1, barRods: [
                     BarChartRodData(
-                      toY: expensesProviderConnector.expensesAmount[2],
+                      toY: (expensesProviderConnector.expensesAmount[2] /
+                              expensesProviderConnector.expensesAmount[0]) *
+                          10,
                       color: Colors.greenAccent,
                       width: 40,
                       borderRadius: BorderRadius.only(
@@ -84,7 +94,9 @@ class ExpensesList extends StatelessWidget {
                   ]),
                   BarChartGroupData(x: 2, barRods: [
                     BarChartRodData(
-                      toY: expensesProviderConnector.expensesAmount[3],
+                      toY: (expensesProviderConnector.expensesAmount[3] /
+                              expensesProviderConnector.expensesAmount[0]) *
+                          10,
                       color: Colors.lightGreen,
                       width: 40,
                       borderRadius: BorderRadius.only(
@@ -95,7 +107,9 @@ class ExpensesList extends StatelessWidget {
                   ]),
                   BarChartGroupData(x: 3, barRods: [
                     BarChartRodData(
-                      toY: expensesProviderConnector.expensesAmount[4],
+                      toY: (expensesProviderConnector.expensesAmount[4] /
+                              expensesProviderConnector.expensesAmount[0]) *
+                          10,
                       color: Colors.lightGreenAccent,
                       width: 40,
                       borderRadius: BorderRadius.only(
