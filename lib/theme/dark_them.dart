@@ -1,88 +1,81 @@
 import 'package:flutter/material.dart';
 
 ThemeData buildAppDarkTheme() {
-  return ThemeData(
-    brightness: Brightness.dark, // Dark theme brightness
-    primarySwatch: Colors.teal,
-    scaffoldBackgroundColor:
-        Colors.grey[900], // Dark background for the scaffold
+  final colorScheme = ColorScheme.fromSeed(
+    seedColor: const Color.fromARGB(190, 28, 126, 11),
+    brightness: Brightness.dark,
+  );
 
-    // Global text styles
+  return ThemeData(
+    colorScheme: colorScheme,
+    useMaterial3: true,
+    scaffoldBackgroundColor: Colors.grey[800], //colorScheme.onSurface,
     textTheme: TextTheme(
       headlineMedium: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
-          color: Colors.white), // White text for headlines
+          color: colorScheme.onPrimary),
       bodyMedium: TextStyle(
-          fontSize: 16, color: Colors.white70), // Light grey text for body
+        fontSize: 16,
+        color: colorScheme.primary,
+      ),
     ),
-
-    // AppBar styling
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.teal[800], // Dark teal background for AppBar
-      foregroundColor: Colors.white, // White text and icons in AppBar
+      backgroundColor: colorScheme.primary,
+      foregroundColor: colorScheme.onPrimary,
       elevation: 4,
-      titleTextStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+      titleTextStyle:
+          const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
     ),
-
-    // Button styles
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.teal[700], // Dark teal button background
-        foregroundColor: Colors.white, // White button text
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Colors.teal, // Teal text for text buttons
-        textStyle: TextStyle(fontWeight: FontWeight.bold),
+        foregroundColor: colorScheme.primary,
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        side:
-            BorderSide(color: Colors.teal), // Teal border for outlined buttons
+        side: BorderSide(color: colorScheme.primary),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
       ),
     ),
-
-    // TextField styling
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.teal),
+        borderSide: BorderSide(color: colorScheme.primary),
       ),
-      labelStyle: TextStyle(color: Colors.teal), // Teal label text
+      labelStyle: TextStyle(color: colorScheme.primary),
     ),
-
-    // Card styling
     cardTheme: CardTheme(
       elevation: 4,
-      color: Colors.grey[850], // Dark grey background for cards
+      color: colorScheme.secondaryContainer, //Colors.grey[850],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
     ),
-
-    // Floating action button
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.teal, // Teal background for the FAB
-      foregroundColor: Colors.white, // White text and icons in FAB
+      backgroundColor: colorScheme.primary,
+      foregroundColor: colorScheme.onPrimary,
     ),
-
-    // Icon styling
-    iconTheme: IconThemeData(color: Colors.teal, size: 28), // Teal icons
-
-    // Bottom navigation bar
+    iconTheme: IconThemeData(
+      color: colorScheme.primary,
+      size: 28,
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: Colors.teal, // Teal color for selected icons
-      unselectedItemColor: Colors.grey, // Light grey color for unselected icons
-      backgroundColor: Colors.black, // Dark background for the bottom nav bar
+      selectedItemColor: colorScheme.primary,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Colors.black,
     ),
   );
 }

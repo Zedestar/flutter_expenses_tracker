@@ -1,82 +1,82 @@
-// theme.dart
 import 'package:flutter/material.dart';
 
 ThemeData buildAppLightTheme() {
+  final colorScheme = ColorScheme.fromSeed(
+    seedColor: const Color.fromARGB(190, 28, 126, 11),
+    brightness: Brightness.light,
+  );
+
   return ThemeData(
-    // brightness: Brightness.light,
-    primarySwatch: Colors.teal,
-    scaffoldBackgroundColor: Colors.grey[100],
-
-    // Global text styles
-    textTheme: TextTheme(
-      headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      bodyMedium: TextStyle(fontSize: 16, color: Colors.black87),
+    colorScheme: colorScheme,
+    useMaterial3: true,
+    scaffoldBackgroundColor: colorScheme.surface,
+    textTheme: TextTheme().copyWith(
+      headlineMedium: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: colorScheme.onPrimary,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        color: colorScheme.primary,
+      ),
     ),
-
-    // AppBar styling
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.teal,
-      foregroundColor: Colors.white,
+      backgroundColor: colorScheme.primary,
+      foregroundColor: colorScheme.onPrimary,
       elevation: 4,
-      titleTextStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+      titleTextStyle:
+          const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
     ),
-
-    // Button styles
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.teal,
-        foregroundColor: Colors.white,
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Colors.teal,
-        textStyle: TextStyle(fontWeight: FontWeight.bold),
+        foregroundColor: colorScheme.primary,
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        side: BorderSide(color: Colors.teal),
+        side: BorderSide(color: colorScheme.primary),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
       ),
     ),
-
-    // TextField styling
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.teal),
+        borderSide: BorderSide(color: colorScheme.primary),
       ),
-      labelStyle: TextStyle(color: Colors.teal),
+      labelStyle: TextStyle(color: colorScheme.primary),
     ),
-
-    // Card styling
     cardTheme: CardTheme(
       elevation: 4,
+      color: colorScheme.secondaryContainer, //Colors.grey[850],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
     ),
-
-    // Floating action button
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.teal,
-      foregroundColor: Colors.white,
+      backgroundColor: colorScheme.primary,
+      foregroundColor: colorScheme.onPrimary,
     ),
-
-    // Icon styling
-    iconTheme: IconThemeData(color: Colors.teal, size: 28),
-
-    // Bottom navigation bar
+    iconTheme: IconThemeData(
+      color: colorScheme.primary,
+      size: 28,
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: Colors.teal,
+      selectedItemColor: colorScheme.primary,
       unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
     ),
   );
 }

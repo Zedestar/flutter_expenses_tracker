@@ -3,6 +3,7 @@ import 'package:expenses_tracker/model/expense.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class ExpensesList extends StatelessWidget {
   const ExpensesList({
@@ -16,11 +17,98 @@ class ExpensesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final expensesProviderConnector = Provider.of<ExpensesListProvider>(
       context,
-      listen: false,
+      listen: true,
     );
     return Column(
       children: [
-        // Text("List expenses"),
+        SizedBox(
+          height: 300,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                maxY: expensesProviderConnector.expensesAmount[0],
+                barTouchData: BarTouchData(enabled: true),
+                titlesData: FlTitlesData(
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        const labels = Category
+                            .values; //['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+                        return Text(
+                          labels[value.toInt()]
+                              .toString()
+                              .split('.')
+                              .last
+                              .toUpperCase(),
+                        );
+                      },
+                      reservedSize: 42,
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: true),
+                  ),
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                ),
+                // borderData: FlBorderData(show: false),
+                barGroups: [
+                  BarChartGroupData(x: 0, barRods: [
+                    BarChartRodData(
+                      toY: expensesProviderConnector.expensesAmount[1],
+                      color: Colors.green,
+                      width: 40,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ),
+                    )
+                  ]),
+                  BarChartGroupData(x: 1, barRods: [
+                    BarChartRodData(
+                      toY: expensesProviderConnector.expensesAmount[2],
+                      color: Colors.greenAccent,
+                      width: 40,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ),
+                    ),
+                  ]),
+                  BarChartGroupData(x: 2, barRods: [
+                    BarChartRodData(
+                      toY: expensesProviderConnector.expensesAmount[3],
+                      color: Colors.lightGreen,
+                      width: 40,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ),
+                    ),
+                  ]),
+                  BarChartGroupData(x: 3, barRods: [
+                    BarChartRodData(
+                      toY: expensesProviderConnector.expensesAmount[4],
+                      color: Colors.lightGreenAccent,
+                      width: 40,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ),
+                    )
+                  ]),
+                ],
+              ),
+            ),
+          ),
+        ),
         Expanded(
           child: Consumer<ExpensesListProvider>(
             builder: (context, expensesItem, child) {

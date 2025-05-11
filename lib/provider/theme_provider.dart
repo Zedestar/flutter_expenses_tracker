@@ -3,7 +3,7 @@ import 'package:expenses_tracker/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 
 class AppThemeProvider with ChangeNotifier {
-  bool _isDark = true;
+  bool _isDark = false;
 
   void tooglingTheme() {
     _isDark = !_isDark;
