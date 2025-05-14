@@ -5,15 +5,15 @@ import 'package:expenses_tracker/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Expenses extends StatefulWidget {
-  const Expenses({super.key});
+class ExpensesPage extends StatefulWidget {
+  const ExpensesPage({super.key});
   @override
-  State<Expenses> createState() {
-    return _ExpensesState();
+  State<ExpensesPage> createState() {
+    return _ExpensesPageState();
   }
 }
 
-class _ExpensesState extends State<Expenses> {
+class _ExpensesPageState extends State<ExpensesPage> {
   void _showTheModalSheet() {
     showModalBottomSheet(
       isScrollControlled: true,

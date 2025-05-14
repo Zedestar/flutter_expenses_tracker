@@ -36,7 +36,7 @@ class _AddingExpensesState extends State<AddingExpenses> {
 
     final pickedDate = await showDatePicker(
       context: context,
-      initialDate: now,
+      initialDate: theDatePicked ?? now,
       firstDate: firstDate,
       lastDate: now,
     );
