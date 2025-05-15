@@ -1,11 +1,12 @@
 import 'package:drift/drift.dart';
+import 'package:uuid/uuid.dart';
 import 'package:uuid/v4.dart';
 
 class ExpensesTable extends Table {
   TextColumn get id => text()
-      .clientDefault(() => UuidV4().toString())
+      .clientDefault(() => const Uuid().v4())
       .named("id")
-      .customConstraint("PRIMARY kEY")();
+      .customConstraint("PRIMARY KEY")();
   TextColumn get expensesName =>
       text().withLength(min: 1, max: 100).named("expsenses_name")();
   TextColumn get expensesCategory =>
