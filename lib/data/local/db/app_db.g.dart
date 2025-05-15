@@ -11,12 +11,13 @@ class $ExpensesTableTable extends ExpensesTable
   $ExpensesTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.string,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      $customConstraints: 'PRIMARY KEY',
-      clientDefault: () => const Uuid().v4());
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _expensesNameMeta =
       const VerificationMeta('expensesName');
   @override
@@ -126,7 +127,7 @@ class $ExpensesTableTable extends ExpensesTable
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ExpensesTableData(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       expensesName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}expsenses_name'])!,
       expensesCategory: attachedDatabase.typeMapping.read(
@@ -148,7 +149,7 @@ class $ExpensesTableTable extends ExpensesTable
 
 class ExpensesTableData extends DataClass
     implements Insertable<ExpensesTableData> {
-  final String id;
+  final int id;
   final String expensesName;
   final String expensesCategory;
   final double expensesAmount;
@@ -164,7 +165,7 @@ class ExpensesTableData extends DataClass
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
+    map['id'] = Variable<int>(id);
     map['expsenses_name'] = Variable<String>(expensesName);
     map['expenses_caegory'] = Variable<String>(expensesCategory);
     map['expenses_amount'] = Variable<double>(expensesAmount);
@@ -192,7 +193,7 @@ class ExpensesTableData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ExpensesTableData(
-      id: serializer.fromJson<String>(json['id']),
+      id: serializer.fromJson<int>(json['id']),
       expensesName: serializer.fromJson<String>(json['expensesName']),
       expensesCategory: serializer.fromJson<String>(json['expensesCategory']),
       expensesAmount: serializer.fromJson<double>(json['expensesAmount']),
@@ -205,7 +206,7 @@ class ExpensesTableData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
+      'id': serializer.toJson<int>(id),
       'expensesName': serializer.toJson<String>(expensesName),
       'expensesCategory': serializer.toJson<String>(expensesCategory),
       'expensesAmount': serializer.toJson<double>(expensesAmount),
@@ -215,7 +216,7 @@ class ExpensesTableData extends DataClass
   }
 
   ExpensesTableData copyWith(
-          {String? id,
+          {int? id,
           String? expensesName,
           String? expensesCategory,
           double? expensesAmount,
@@ -281,13 +282,12 @@ class ExpensesTableData extends DataClass
 }
 
 class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
-  final Value<String> id;
+  final Value<int> id;
   final Value<String> expensesName;
   final Value<String> expensesCategory;
   final Value<double> expensesAmount;
   final Value<String?> expensesDescription;
   final Value<DateTime> expensesDate;
-  final Value<int> rowid;
   const ExpensesTableCompanion({
     this.id = const Value.absent(),
     this.expensesName = const Value.absent(),
@@ -295,7 +295,6 @@ class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
     this.expensesAmount = const Value.absent(),
     this.expensesDescription = const Value.absent(),
     this.expensesDate = const Value.absent(),
-    this.rowid = const Value.absent(),
   });
   ExpensesTableCompanion.insert({
     this.id = const Value.absent(),
@@ -304,19 +303,17 @@ class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
     required double expensesAmount,
     this.expensesDescription = const Value.absent(),
     required DateTime expensesDate,
-    this.rowid = const Value.absent(),
   })  : expensesName = Value(expensesName),
         expensesCategory = Value(expensesCategory),
         expensesAmount = Value(expensesAmount),
         expensesDate = Value(expensesDate);
   static Insertable<ExpensesTableData> custom({
-    Expression<String>? id,
+    Expression<int>? id,
     Expression<String>? expensesName,
     Expression<String>? expensesCategory,
     Expression<double>? expensesAmount,
     Expression<String>? expensesDescription,
     Expression<DateTime>? expensesDate,
-    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -326,18 +323,16 @@ class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
       if (expensesDescription != null)
         'expenses_description': expensesDescription,
       if (expensesDate != null) 'expenses_date': expensesDate,
-      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ExpensesTableCompanion copyWith(
-      {Value<String>? id,
+      {Value<int>? id,
       Value<String>? expensesName,
       Value<String>? expensesCategory,
       Value<double>? expensesAmount,
       Value<String?>? expensesDescription,
-      Value<DateTime>? expensesDate,
-      Value<int>? rowid}) {
+      Value<DateTime>? expensesDate}) {
     return ExpensesTableCompanion(
       id: id ?? this.id,
       expensesName: expensesName ?? this.expensesName,
@@ -345,7 +340,6 @@ class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
       expensesAmount: expensesAmount ?? this.expensesAmount,
       expensesDescription: expensesDescription ?? this.expensesDescription,
       expensesDate: expensesDate ?? this.expensesDate,
-      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -353,7 +347,7 @@ class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<String>(id.value);
+      map['id'] = Variable<int>(id.value);
     }
     if (expensesName.present) {
       map['expsenses_name'] = Variable<String>(expensesName.value);
@@ -370,9 +364,6 @@ class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
     if (expensesDate.present) {
       map['expenses_date'] = Variable<DateTime>(expensesDate.value);
     }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
     return map;
   }
 
@@ -384,8 +375,7 @@ class ExpensesTableCompanion extends UpdateCompanion<ExpensesTableData> {
           ..write('expensesCategory: $expensesCategory, ')
           ..write('expensesAmount: $expensesAmount, ')
           ..write('expensesDescription: $expensesDescription, ')
-          ..write('expensesDate: $expensesDate, ')
-          ..write('rowid: $rowid')
+          ..write('expensesDate: $expensesDate')
           ..write(')'))
         .toString();
   }
@@ -404,23 +394,21 @@ abstract class _$AppDb extends GeneratedDatabase {
 
 typedef $$ExpensesTableTableCreateCompanionBuilder = ExpensesTableCompanion
     Function({
-  Value<String> id,
+  Value<int> id,
   required String expensesName,
   required String expensesCategory,
   required double expensesAmount,
   Value<String?> expensesDescription,
   required DateTime expensesDate,
-  Value<int> rowid,
 });
 typedef $$ExpensesTableTableUpdateCompanionBuilder = ExpensesTableCompanion
     Function({
-  Value<String> id,
+  Value<int> id,
   Value<String> expensesName,
   Value<String> expensesCategory,
   Value<double> expensesAmount,
   Value<String?> expensesDescription,
   Value<DateTime> expensesDate,
-  Value<int> rowid,
 });
 
 class $$ExpensesTableTableFilterComposer
@@ -432,7 +420,7 @@ class $$ExpensesTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get id => $composableBuilder(
+  ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get expensesName => $composableBuilder(
@@ -463,7 +451,7 @@ class $$ExpensesTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get id => $composableBuilder(
+  ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get expensesName => $composableBuilder(
@@ -496,7 +484,7 @@ class $$ExpensesTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get id =>
+  GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
   GeneratedColumn<String> get expensesName => $composableBuilder(
@@ -541,13 +529,12 @@ class $$ExpensesTableTableTableManager extends RootTableManager<
           createComputedFieldComposer: () =>
               $$ExpensesTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
+            Value<int> id = const Value.absent(),
             Value<String> expensesName = const Value.absent(),
             Value<String> expensesCategory = const Value.absent(),
             Value<double> expensesAmount = const Value.absent(),
             Value<String?> expensesDescription = const Value.absent(),
             Value<DateTime> expensesDate = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
           }) =>
               ExpensesTableCompanion(
             id: id,
@@ -556,16 +543,14 @@ class $$ExpensesTableTableTableManager extends RootTableManager<
             expensesAmount: expensesAmount,
             expensesDescription: expensesDescription,
             expensesDate: expensesDate,
-            rowid: rowid,
           ),
           createCompanionCallback: ({
-            Value<String> id = const Value.absent(),
+            Value<int> id = const Value.absent(),
             required String expensesName,
             required String expensesCategory,
             required double expensesAmount,
             Value<String?> expensesDescription = const Value.absent(),
             required DateTime expensesDate,
-            Value<int> rowid = const Value.absent(),
           }) =>
               ExpensesTableCompanion.insert(
             id: id,
@@ -574,7 +559,6 @@ class $$ExpensesTableTableTableManager extends RootTableManager<
             expensesAmount: expensesAmount,
             expensesDescription: expensesDescription,
             expensesDate: expensesDate,
-            rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

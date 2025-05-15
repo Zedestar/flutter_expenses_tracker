@@ -1,9 +1,11 @@
 import 'package:expenses_tracker/components/alert_dialogy.dart';
+import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:expenses_tracker/model/expense.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:drift/drift.dart' as drift;
 
 class AddingExpenses extends StatefulWidget {
   const AddingExpenses({super.key});
@@ -14,10 +16,17 @@ class AddingExpenses extends StatefulWidget {
 }
 
 class _AddingExpensesState extends State<AddingExpenses> {
+  late AppDb _db;
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? theDatePicked;
   Category? _categorySelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _db = AppDb();
+  }
 
   @override
   void dispose() {
@@ -60,6 +69,33 @@ class _AddingExpensesState extends State<AddingExpenses> {
       context,
       listen: false,
     );
+
+    // Creating the new expense
+    final newExpense = ExpensesTableCompanion(
+      // id: drift.Value(uuid.v4()),
+      expensesName: drift.Value(_titleController.text.trim()),
+      expensesCategory: drift.Value(_categorySelected!.name),
+      expensesAmount: drift.Value(theAmount),
+      expensesDate: drift.Value(theDatePicked!),
+      expensesDescription: drift.Value(
+          "This is just as description as for now ther is now its textfield"),
+    );
+
+    // Adding the new expense to the database
+    _db.insertingNewExpense(newExpense).then(
+          (value) => ScaffoldMessenger.of(context).showMaterialBanner(
+            MaterialBanner(
+              content: Text("The new expenses is added $value}"),
+              actions: [
+                TextButton(
+                  onPressed: () =>
+                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
+                  child: Text("Close"),
+                ),
+              ],
+            ),
+          ),
+        );
     expensesProviderConnector.addExpensesInExpensesList(
       title: _titleController.text.trim(),
       amount: theAmount,

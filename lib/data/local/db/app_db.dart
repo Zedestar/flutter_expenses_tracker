@@ -29,13 +29,13 @@ class AppDb extends _$AppDb {
   }
 
   // The method for getting a single expense by its ID
-  Future<ExpensesTableData> getExpenseById(String id) async {
+  Future<ExpensesTableData> getExpenseById(int id) async {
     return await (select(expensesTable)..where((item) => item.id.equals(id)))
         .getSingle();
   }
 
   // The method for deleting an expense by its ID
-  Future<int> deleteExpense(String id) async {
+  Future<int> deleteExpense(int id) async {
     return await (delete(expensesTable)..where((item) => item.id.equals(id)))
         .go();
   }
@@ -45,6 +45,7 @@ class AppDb extends _$AppDb {
     return await into(expensesTable).insert(entity);
   }
 
+  // The function to update the existing database table row
   Future<bool> updatingTheExpenses(ExpensesTableCompanion entity) async {
     return await update(expensesTable).replace(entity);
   }

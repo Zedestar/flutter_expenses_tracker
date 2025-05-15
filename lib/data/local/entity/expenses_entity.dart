@@ -3,10 +3,12 @@ import 'package:uuid/uuid.dart';
 import 'package:uuid/v4.dart';
 
 class ExpensesTable extends Table {
-  TextColumn get id => text()
-      .clientDefault(() => const Uuid().v4())
-      .named("id")
-      .customConstraint("PRIMARY KEY")();
+  // TextColumn get id => text()
+  //     .clientDefault(() => const Uuid().v4())
+  //     .named("id")
+  //     // .customConstraint("PRIMARY KEY")
+  //     .isPrimaryKey()();
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get expensesName =>
       text().withLength(min: 1, max: 100).named("expsenses_name")();
   TextColumn get expensesCategory =>
