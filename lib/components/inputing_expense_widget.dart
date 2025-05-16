@@ -30,6 +30,7 @@ class _AddingExpensesState extends State<AddingExpenses> {
 
   @override
   void dispose() {
+    _db.close();
     _titleController.dispose();
     _amountController.dispose();
     super.dispose();
@@ -82,20 +83,23 @@ class _AddingExpensesState extends State<AddingExpenses> {
     );
 
     // Adding the new expense to the database
-    _db.insertingNewExpense(newExpense).then(
-          (value) => ScaffoldMessenger.of(context).showMaterialBanner(
-            MaterialBanner(
-              content: Text("The new expenses is added $value}"),
-              actions: [
-                TextButton(
-                  onPressed: () =>
-                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
-                  child: Text("Close"),
-                ),
-              ],
+
+    _db.insertingNewExpense(newExpense).then((value) {
+      ScaffoldMessenger.of(context).showMaterialBanner(
+        MaterialBanner(
+          content: Text("The new expense is added: $value"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: Text("Close"),
             ),
-          ),
-        );
+          ],
+        ),
+      );
+    });
+
     expensesProviderConnector.addExpensesInExpensesList(
       title: _titleController.text.trim(),
       amount: theAmount,
