@@ -8,10 +8,10 @@ final formatter = DateFormat.yMd();
 enum Category { food, travel, leisure, work }
 
 const categoricalItem = {
-  Category.food: Icons.food_bank,
-  Category.travel: Icons.flight_takeoff,
-  Category.leisure: Icons.movie,
-  Category.work: Icons.work,
+  "food": Icons.food_bank,
+  "travel": Icons.flight_takeoff,
+  "leisure": Icons.movie,
+  "work": Icons.work,
 };
 
 class Expense {

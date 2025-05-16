@@ -151,7 +151,9 @@ class _ExpensesListState extends State<ExpensesList> {
                   return ListView.builder(
                       itemCount: expensesList.length,
                       itemBuilder: (context, index) {
-                        return Text("This is the item fro the database");
+                        return ExpenseItem(
+                          expense: expensesList[index],
+                        );
                       });
                 } else {
                   return Center(
