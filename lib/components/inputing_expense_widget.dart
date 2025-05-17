@@ -1,11 +1,13 @@
 import 'package:expenses_tracker/components/alert_dialogy.dart';
+import 'package:expenses_tracker/components/customize_date_widget.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:expenses_tracker/model/expense.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as drift;
+import 'customized_text_input_field.dart';
+import 'dropdown_category.dart';
 
 class AddingExpenses extends StatefulWidget {
   const AddingExpenses({super.key});
@@ -19,8 +21,9 @@ class _AddingExpensesState extends State<AddingExpenses> {
   late AppDb _db;
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  final _descriptionController = TextEditingController();
   DateTime? theDatePicked;
-  Category? _categorySelected;
+  String? _categorySelected;
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _AddingExpensesState extends State<AddingExpenses> {
     _db.close();
     _titleController.dispose();
     _amountController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -61,7 +65,8 @@ class _AddingExpensesState extends State<AddingExpenses> {
     if (invalidAmount ||
         _titleController.text.trim().isEmpty ||
         theDatePicked == null ||
-        _categorySelected == null) {
+        _categorySelected == null ||
+        _descriptionController.text.trim().isEmpty) {
       showInvalidInputDialog(context);
       return;
     }
@@ -73,17 +78,16 @@ class _AddingExpensesState extends State<AddingExpenses> {
 
     // Creating the new expense
     final newExpense = ExpensesTableCompanion(
-      // id: drift.Value(uuid.v4()),
       expensesName: drift.Value(_titleController.text.trim()),
-      expensesCategory: drift.Value(_categorySelected!.name),
+      expensesCategory: drift.Value(_categorySelected!),
       expensesAmount: drift.Value(theAmount),
       expensesDate: drift.Value(theDatePicked!),
       expensesDescription: drift.Value(
-          "This is just as description as for now ther is now its textfield"),
+        _descriptionController.text.trim(),
+      ),
     );
 
     // Adding the new expense to the database
-
     _db.insertingNewExpense(newExpense).then((value) {
       ScaffoldMessenger.of(context).showMaterialBanner(
         MaterialBanner(
@@ -100,13 +104,19 @@ class _AddingExpensesState extends State<AddingExpenses> {
       );
     });
 
-    expensesProviderConnector.addExpensesInExpensesList(
-      title: _titleController.text.trim(),
-      amount: theAmount,
-      date: theDatePicked!,
-      category: _categorySelected!,
-    );
+    // expensesProviderConnector.addExpensesInExpensesList(
+    //   title: _titleController.text.trim(),
+    //   amount: theAmount,
+    //   date: theDatePicked!,
+    //   category: _categorySelected!,
+    // );
     Navigator.pop(context);
+  }
+
+  void _setCategory(String categoryName) {
+    setState(() {
+      _categorySelected = categoryName;
+    });
   }
 
   @override
@@ -118,72 +128,41 @@ class _AddingExpensesState extends State<AddingExpenses> {
       child: Center(
         child: Column(
           children: [
-            TextField(
-              maxLength: 50,
-              controller: _titleController,
-              decoration: InputDecoration(
-                hintText: "Enter the kind of expenses",
-                label: Text("Expenses"),
-              ),
+            CustomedTextInputField(
+              descriptionController: _titleController,
+              textLabel: Text("Expenses Name"),
+              textHint: "Enter the name of the expenses",
+              textInputType: TextInputType.text,
+              maxlength: 100,
+            ),
+            CustomedTextInputField(
+              descriptionController: _descriptionController,
+              textLabel: Text("Description"),
+              textHint: "Enter the expense description",
+              textInputType: TextInputType.text,
+              maxlength: 100,
             ),
             Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _amountController,
-                    decoration: InputDecoration(
-                      hintText: "Enter the amount",
-                      prefixText: "\$",
-                      label: Text("Amount"),
-                    ),
-                  ),
+                  child: CustomedTextInputField(
+                      textInputType: TextInputType.number,
+                      descriptionController: _amountController,
+                      textLabel: Text("Amount"),
+                      textHint: "Enter the amount",
+                      maxlength: 10),
                 ),
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        theDatePicked == null
-                            ? "No date selected"
-                            : formatter.format(theDatePicked!),
-                      ),
-                      IconButton(
-                        onPressed: _showDatePicker,
-                        icon: Icon(
-                          Icons.calendar_month,
-                        ),
-                      ),
-                    ],
+                  child: DateOptionButton(
+                    showTheDatePicker: _showDatePicker,
+                    theDatePicked: theDatePicked,
                   ),
                 ),
               ],
             ),
-            DropdownButton(
-              hint: Text(
-                _categorySelected == null
-                    ? "Choose category"
-                    : _categorySelected.toString().toUpperCase(),
-              ),
-              items: Category.values
-                  .map(
-                    (element) => DropdownMenuItem(
-                      value: element,
-                      child: Text(
-                        element.name.toUpperCase(),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (element) {
-                setState(() {
-                  _categorySelected = element;
-                });
-              },
-            ),
+            TheDropdownCategory(
+                theFunctionToSetCategory: _setCategory,
+                categorySelected: _categorySelected),
             Spacer(),
             Row(
               children: [

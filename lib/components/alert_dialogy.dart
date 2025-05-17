@@ -27,6 +27,8 @@ void showInvalidInputDialog(BuildContext context) {
               Text("• Select a date."),
               SizedBox(height: 6),
               Text("• Choose a category."),
+              SizedBox(height: 6),
+              Text("• Provide the description."),
             ],
           ),
         ),

@@ -26,11 +26,10 @@ class ExpenseItem extends StatelessWidget {
       key: ValueKey(expense.id),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
+          Navigator.pushNamed(
             context,
-            MaterialPageRoute(
-              builder: (context) => ViewExpenses(id: expense.id),
-            ),
+            '/view-expenses',
+            arguments: expense.id,
           );
         },
         child: Card(
