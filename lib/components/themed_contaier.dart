@@ -10,7 +10,7 @@ class ThemedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 350,
       margin: EdgeInsets.all(20),
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(

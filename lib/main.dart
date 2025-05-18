@@ -7,12 +7,15 @@ import 'package:provider/provider.dart';
 import 'package:expenses_tracker/theme/light_theme.dart';
 import 'package:expenses_tracker/routes/route_generator.dart';
 
+import 'provider/database_provider.dart';
+
 main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ExpensesListProvider()),
         ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+        ChangeNotifierProvider(create: (context) => AppDatabaseProvider()),
       ],
       child: MyApp(),
     ),

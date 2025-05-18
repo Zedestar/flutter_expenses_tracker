@@ -1,6 +1,7 @@
 import 'package:expenses_tracker/components/expense_item.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:expenses_tracker/model/expense.dart';
+import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,12 +17,12 @@ class ExpensesList extends StatefulWidget {
 }
 
 class _ExpensesListState extends State<ExpensesList> {
-  late AppDb _db;
+  // late AppDb _db;
 
   @override
   void initState() {
     super.initState();
-    _db = AppDb();
+    // _db = AppDb();
   }
 
   @override
@@ -30,6 +31,8 @@ class _ExpensesListState extends State<ExpensesList> {
       context,
       listen: true,
     );
+    final db = Provider.of<AppDatabaseProvider>(context, listen: false).db;
+
     return Column(
       children: [
         Text(
@@ -135,8 +138,8 @@ class _ExpensesListState extends State<ExpensesList> {
           ),
         ),
         Expanded(
-          child: FutureBuilder<List<ExpensesTableData>>(
-              future: _db.getAllExpenses(),
+          child: StreamBuilder<List<ExpensesTableData>>(
+              stream: db.getAllExpenses(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(

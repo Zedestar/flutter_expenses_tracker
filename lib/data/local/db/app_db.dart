@@ -24,8 +24,15 @@ class AppDb extends _$AppDb {
   int get schemaVersion => 1;
 
   // The method for listing all the expenses present in the database
-  Future<List<ExpensesTableData>> getAllExpenses() async {
-    return await select(expensesTable).get();
+  // Future<List<ExpensesTableData>> getAllExpenses() async {
+  //   return await select(expensesTable).get();
+  // }
+
+  // Modified version with the stream builder
+  Stream<List<ExpensesTableData>> getAllExpenses() {
+    return (select(expensesTable)
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.expensesDate)]))
+        .watch();
   }
 
   // The method for getting a single expense by its ID

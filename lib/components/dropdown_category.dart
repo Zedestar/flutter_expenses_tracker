@@ -23,26 +23,46 @@ class TheDropdownCategory extends StatefulWidget {
 class _TheDropdownCategoryState extends State<TheDropdownCategory> {
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-      hint: Text(
-        widget.categorySelected == null
-            ? "Choose category"
-            : widget.categorySelected!.toUpperCase(),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
-      items: widget.categories
-          .map(
-            (element) => DropdownMenuItem(
-              value: element,
-              child: Text(
-                element.toUpperCase(),
+      child: DropdownButton(
+        icon: const Icon(Icons.arrow_drop_down, color: Colors.blueAccent),
+        isExpanded: true,
+        borderRadius: BorderRadius.circular(10),
+        hint: Text(
+          widget.categorySelected == null
+              ? "Choose category"
+              : widget.categorySelected!.toUpperCase(),
+          style: const TextStyle(
+            color: Colors.black87,
+            fontSize: 16,
+          ),
+        ),
+        items: widget.categories
+            .map(
+              (element) => DropdownMenuItem(
+                value: element,
+                child: Text(
+                  element.toUpperCase(),
+                ),
               ),
-            ),
-          )
-          .toList(),
-      onChanged: (element) {
-        print(element);
-        widget.theFunctionToSetCategory(element!);
-      },
+            )
+            .toList(),
+        onChanged: (element) {
+          widget.theFunctionToSetCategory(element!);
+        },
+      ),
     );
   }
 }

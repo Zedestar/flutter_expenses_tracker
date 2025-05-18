@@ -1,11 +1,12 @@
 import 'package:expenses_tracker/components/alert_dialogy.dart';
 import 'package:expenses_tracker/components/customize_date_widget.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
-import 'package:expenses_tracker/model/expense.dart';
+// import 'package:expenses_tracker/model/expense.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as drift;
+import '../provider/database_provider.dart';
 import 'customized_text_input_field.dart';
 import 'dropdown_category.dart';
 
@@ -18,22 +19,23 @@ class AddingExpenses extends StatefulWidget {
 }
 
 class _AddingExpensesState extends State<AddingExpenses> {
-  late AppDb _db;
+  // late AppDb _db;
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
   DateTime? theDatePicked;
   String? _categorySelected;
+  // final db = Provider.of<AppDatabaseProvider>(context, listen: false).db;
 
   @override
   void initState() {
     super.initState();
-    _db = AppDb();
+    // _db = AppDb();
   }
 
   @override
   void dispose() {
-    _db.close();
+    // _db.close();
     _titleController.dispose();
     _amountController.dispose();
     _descriptionController.dispose();
@@ -88,7 +90,10 @@ class _AddingExpensesState extends State<AddingExpenses> {
     );
 
     // Adding the new expense to the database
-    _db.insertingNewExpense(newExpense).then((value) {
+    Provider.of<AppDatabaseProvider>(context, listen: false)
+        .db
+        .insertingNewExpense(newExpense)
+        .then((value) {
       ScaffoldMessenger.of(context).showMaterialBanner(
         MaterialBanner(
           content: Text("The new expense is added: $value"),
