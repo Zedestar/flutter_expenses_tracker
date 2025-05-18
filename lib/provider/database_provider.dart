@@ -9,6 +9,36 @@ class AppDatabaseProvider with ChangeNotifier {
 
   AppDb get db => _db;
 
+  Stream<List<double>> get expensesAmountStream {
+    return _db.getAllExpenses().map((expenses) {
+      double totalAmount = 0;
+      double totalFood = 0;
+      double totalTravel = 0;
+      double totalLeisure = 0;
+      double totalWork = 0;
+
+      for (var expense in expenses) {
+        switch (expense.expensesCategory) {
+          case "food":
+            totalFood += expense.expensesAmount;
+            break;
+          case "travel":
+            totalTravel += expense.expensesAmount;
+            break;
+          case "leisure":
+            totalLeisure += expense.expensesAmount;
+            break;
+          case "work":
+            totalWork += expense.expensesAmount;
+            break;
+        }
+        totalAmount += expense.expensesAmount;
+      }
+
+      return [totalAmount, totalFood, totalTravel, totalLeisure, totalWork];
+    });
+  }
+
   @override
   void dispose() {
     _db.close();
