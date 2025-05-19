@@ -20,15 +20,10 @@ void showInvalidInputDialog(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("• Enter an amount greater than 0."),
-              SizedBox(height: 6),
-              Text("• Provide a valid title."),
               SizedBox(height: 6),
               Text("• Select a date."),
               SizedBox(height: 6),
-              Text("• Choose a category."),
-              SizedBox(height: 6),
-              Text("• Provide the description."),
+              Text("• Choose a category to continue."),
             ],
           ),
         ),

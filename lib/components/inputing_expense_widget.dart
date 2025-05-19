@@ -1,7 +1,6 @@
 import 'package:expenses_tracker/components/alert_dialogy.dart';
 import 'package:expenses_tracker/components/customize_date_widget.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
-// import 'package:expenses_tracker/model/expense.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,23 +18,15 @@ class AddingExpenses extends StatefulWidget {
 }
 
 class _AddingExpensesState extends State<AddingExpenses> {
-  // late AppDb _db;
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
   DateTime? theDatePicked;
   String? _categorySelected;
-  // final db = Provider.of<AppDatabaseProvider>(context, listen: false).db;
-
-  @override
-  void initState() {
-    super.initState();
-    // _db = AppDb();
-  }
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    // _db.close();
     _titleController.dispose();
     _amountController.dispose();
     _descriptionController.dispose();
@@ -62,34 +53,24 @@ class _AddingExpensesState extends State<AddingExpenses> {
   }
 
   void _validateFormAnsSaveData() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
     final theAmount = double.tryParse(_amountController.text);
-    final invalidAmount = theAmount == null || theAmount < 0;
-    if (invalidAmount ||
-        _titleController.text.trim().isEmpty ||
-        theDatePicked == null ||
-        _categorySelected == null ||
-        _descriptionController.text.trim().isEmpty) {
+    if (theDatePicked == null || _categorySelected == null) {
       showInvalidInputDialog(context);
       return;
     }
-    // Calling the item to add the item
-    final expensesProviderConnector = Provider.of<ExpensesListProvider>(
-      context,
-      listen: false,
-    );
 
-    // Creating the new expense
     final newExpense = ExpensesTableCompanion(
       expensesName: drift.Value(_titleController.text.trim()),
       expensesCategory: drift.Value(_categorySelected!),
-      expensesAmount: drift.Value(theAmount),
+      expensesAmount: drift.Value(theAmount!),
       expensesDate: drift.Value(theDatePicked!),
       expensesDescription: drift.Value(
         _descriptionController.text.trim(),
       ),
     );
-
-    // Adding the new expense to the database
     Provider.of<AppDatabaseProvider>(context, listen: false)
         .db
         .insertingNewExpense(newExpense)
@@ -108,13 +89,6 @@ class _AddingExpensesState extends State<AddingExpenses> {
         ),
       );
     });
-
-    // expensesProviderConnector.addExpensesInExpensesList(
-    //   title: _titleController.text.trim(),
-    //   amount: theAmount,
-    //   date: theDatePicked!,
-    //   category: _categorySelected!,
-    // );
     Navigator.pop(context);
   }
 
@@ -131,62 +105,65 @@ class _AddingExpensesState extends State<AddingExpenses> {
         16,
       ),
       child: Center(
-        child: Column(
-          children: [
-            CustomedTextInputField(
-              descriptionController: _titleController,
-              textLabel: Text("Expenses Name"),
-              textHint: "Enter the name of the expenses",
-              textInputType: TextInputType.text,
-              maxlength: 100,
-            ),
-            CustomedTextInputField(
-              descriptionController: _descriptionController,
-              textLabel: Text("Description"),
-              textHint: "Enter the expense description",
-              textInputType: TextInputType.text,
-              maxlength: 100,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomedTextInputField(
-                      textInputType: TextInputType.number,
-                      descriptionController: _amountController,
-                      textLabel: Text("Amount"),
-                      textHint: "Enter the amount",
-                      maxlength: 10),
-                ),
-                Expanded(
-                  child: DateOptionButton(
-                    showTheDatePicker: _showDatePicker,
-                    theDatePicked: theDatePicked,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              CustomedTextInputField(
+                descriptionController: _titleController,
+                textLabel: Text("Expenses Name"),
+                textHint: "Enter the name of the expenses",
+                textInputType: TextInputType.text,
+                maxlength: 100,
+              ),
+              CustomedTextInputField(
+                descriptionController: _descriptionController,
+                textLabel: Text("Description"),
+                textHint: "Enter the expense description",
+                textInputType: TextInputType.text,
+                maxlength: 100,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomedTextInputField(
+                        textInputType: TextInputType.number,
+                        descriptionController: _amountController,
+                        textLabel: Text("Amount"),
+                        textHint: "Enter the amount",
+                        maxlength: 10),
                   ),
-                ),
-              ],
-            ),
-            TheDropdownCategory(
-                theFunctionToSetCategory: _setCategory,
-                categorySelected: _categorySelected),
-            Spacer(),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: _validateFormAnsSaveData,
-                  child: Text(
-                    "Add Expenses",
+                  Expanded(
+                    child: DateOptionButton(
+                      showTheDatePicker: _showDatePicker,
+                      theDatePicked: theDatePicked,
+                    ),
                   ),
-                ),
-                Spacer(),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Cancel"),
-                ),
-              ],
-            )
-          ],
+                ],
+              ),
+              TheDropdownCategory(
+                  theFunctionToSetCategory: _setCategory,
+                  categorySelected: _categorySelected),
+              Spacer(),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: _validateFormAnsSaveData,
+                    child: Text(
+                      "Add Expenses",
+                    ),
+                  ),
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("Cancel"),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

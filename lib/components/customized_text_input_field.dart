@@ -18,10 +18,16 @@ class CustomedTextInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       maxLength: maxlength,
       controller: _descriptionController,
       keyboardType: textInputType,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'This field cannot be empty';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         hintText: textHint,
         label: textLabel,
