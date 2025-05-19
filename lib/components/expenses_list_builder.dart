@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/components/customized_column_showing_itemsList.dart';
 import 'package:expenses_tracker/components/expense_item.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:expenses_tracker/model/expense.dart';
@@ -5,7 +6,8 @@ import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fl_chart/fl_chart.dart';
+
+import 'customized_charts_streamed_widget.dart';
 
 class ExpensesList extends StatefulWidget {
   const ExpensesList({
@@ -17,156 +19,29 @@ class ExpensesList extends StatefulWidget {
 }
 
 class _ExpensesListState extends State<ExpensesList> {
-  // late AppDb _db;
-
-  @override
-  void initState() {
-    super.initState();
-    // _db = AppDb();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final expensesProviderConnector = Provider.of<ExpensesListProvider>(
-      context,
-      listen: true,
-    );
     final db = Provider.of<AppDatabaseProvider>(context, listen: false);
 
-    return Column(
-      children: [
-        Text("Expenses Chart"),
-        SizedBox(
-          height: 250,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StreamBuilder<List<double>>(
-              stream: db.expensesAmountStream,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text("Loading...");
-                } else if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                } else if (!snapshot.hasData) {
-                  return Text("No data");
-                } else {
-                  final totals = snapshot.data!;
-                  return BarChart(
-                    BarChartData(
-                      alignment: BarChartAlignment.spaceAround,
-                      maxY: 10,
-                      barTouchData: BarTouchData(enabled: true),
-                      titlesData: FlTitlesData(
-                        bottomTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            getTitlesWidget: (value, meta) {
-                              const labels = Category.values;
-                              return Text(
-                                labels[value.toInt()]
-                                    .toString()
-                                    .split('.')
-                                    .last
-                                    .toUpperCase(),
-                              );
-                            },
-                            reservedSize: 42,
-                          ),
-                        ),
-                        leftTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: true),
-                        ),
-                        rightTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        topTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                      ),
-                      // borderData: FlBorderData(show: false),
-                      barGroups: [
-                        BarChartGroupData(x: 0, barRods: [
-                          BarChartRodData(
-                            toY: (totals[1] / totals[0]) * 10,
-                            color: Colors.green,
-                            width: 40,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                            ),
-                          )
-                        ]),
-                        BarChartGroupData(x: 1, barRods: [
-                          BarChartRodData(
-                            toY: (totals[2] / totals[0]) * 10,
-                            color: Colors.greenAccent,
-                            width: 40,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                            ),
-                          ),
-                        ]),
-                        BarChartGroupData(x: 2, barRods: [
-                          BarChartRodData(
-                            toY: (totals[3] / totals[0]) * 10,
-                            color: Colors.lightGreen,
-                            width: 40,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(6),
-                              topRight: Radius.circular(6),
-                            ),
-                          ),
-                        ]),
-                        BarChartGroupData(
-                          x: 3,
-                          barRods: [
-                            BarChartRodData(
-                              toY: (totals[4] / totals[0]) * 10,
-                              color: Colors.lightGreenAccent,
-                              width: 40,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(6),
-                                topRight: Radius.circular(6),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-            ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text("Expenses Chart"),
+          StreamedBarChart(
+            expensesStream: db.expensesAmountStream,
           ),
-        ),
-        Expanded(
-          child: StreamBuilder<List<ExpensesTableData>>(
-              stream: db.db.getAllExpenses(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Error: ${snapshot.error}"),
-                  );
-                } else if (snapshot.hasData) {
-                  List<ExpensesTableData> expensesList = snapshot.data!;
-                  return ListView.builder(
-                      itemCount: expensesList.length,
-                      itemBuilder: (context, index) {
-                        return ExpenseItem(
-                          expense: expensesList[index],
-                        );
-                      });
-                } else {
-                  return Center(
-                    child: Text("No data found"),
-                  );
-                }
-              }),
+          StreamedColumnForItems(
+            expensesList: db.db.getAllExpenses(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
           // child: Consumer<ExpensesListProvider>(
           //   builder: (context, expensesItem, child) {
           //     return ListView.builder(
@@ -216,8 +91,3 @@ class _ExpensesListState extends State<ExpensesList> {
           //     );
           //   },
           // ),
-        ),
-      ],
-    );
-  }
-}
