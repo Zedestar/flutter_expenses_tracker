@@ -76,7 +76,7 @@ ThemeData buildAppDarkTheme() {
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: colorScheme.primary,
       unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.black,
+      backgroundColor: colorScheme.primaryContainer,
     ),
   );
 }

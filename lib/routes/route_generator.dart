@@ -1,4 +1,5 @@
 import 'package:expenses_tracker/pages/expenses.dart';
+import 'package:expenses_tracker/pages/home_page.dart';
 import 'package:expenses_tracker/pages/view_expenses_page.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,8 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
+        return MaterialPageRoute(builder: (_) => const HomePage());
+      case '/expenses-page':
         return MaterialPageRoute(builder: (_) => const ExpensesPage());
       case '/view-expenses':
         if (args is int) {

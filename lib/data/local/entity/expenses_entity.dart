@@ -1,13 +1,16 @@
 import 'package:drift/drift.dart';
-import 'package:uuid/uuid.dart';
-import 'package:uuid/v4.dart';
+
+class RecordType extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get recordName =>
+      text().withLength(min: 1, max: 100).named("record_name")();
+  TextColumn get recordDescription =>
+      text().withLength(min: 1, max: 200).named("record_decription")();
+  DateTimeColumn get recordTimeCreated =>
+      dateTime().named("record_time_created")();
+}
 
 class ExpensesTable extends Table {
-  // TextColumn get id => text()
-  //     .clientDefault(() => const Uuid().v4())
-  //     .named("id")
-  //     // .customConstraint("PRIMARY KEY")
-  //     .isPrimaryKey()();
   IntColumn get id => integer().autoIncrement()();
   TextColumn get expensesName =>
       text().withLength(min: 1, max: 100).named("expsenses_name")();
@@ -19,4 +22,9 @@ class ExpensesTable extends Table {
       .named("expenses_description")
       .nullable()();
   DateTimeColumn get expensesDate => dateTime().named("expenses_date")();
+
+  // Connecting the expenses table to the record type table
+  IntColumn get ofRecordTypeId => integer()
+      .customConstraint('REFERENCES record_type(id)')
+      .named("of_record_type_id")();
 }

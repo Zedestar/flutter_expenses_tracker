@@ -74,9 +74,9 @@ ThemeData buildAppLightTheme() {
       size: 28,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: colorScheme.primary,
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.black,
+      selectedItemColor: colorScheme.onPrimary,
+      // unselectedItemColor: Colors.grey,
+      backgroundColor: colorScheme.primary,
     ),
   );
 }

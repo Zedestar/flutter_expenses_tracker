@@ -26,7 +26,6 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final themeConnector =
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -56,9 +55,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
           ),
         ],
       ),
-      body: ExpensesList(
-          // expenses: expensesData,
-          ),
+      body: ExpensesList(),
     );
   }
 }
