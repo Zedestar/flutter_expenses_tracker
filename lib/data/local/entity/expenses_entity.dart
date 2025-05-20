@@ -25,6 +25,11 @@ class ExpensesTable extends Table {
 
   // Connecting the expenses table to the record type table
   IntColumn get ofRecordTypeId => integer()
-      .customConstraint('REFERENCES record_type(id)')
+      .references(
+        RecordType,
+        #id,
+        onDelete: KeyAction.cascade,
+      )
+      .nullable()
       .named("of_record_type_id")();
 }

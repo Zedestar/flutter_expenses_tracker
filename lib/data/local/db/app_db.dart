@@ -15,17 +15,39 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(tables: [ExpensesTable])
+@DriftDatabase(tables: [ExpensesTable, RecordType])
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        beforeOpen: (details) async {
+          await customStatement('PRAGMA foreign_keys = ON');
+        },
+        onCreate: (Migrator m) async {
+          await m.createAll();
+        },
+        onUpgrade: (m, from, to) async {
+          if (from == 1 && to == 2) {
+            await m.createTable(recordType);
+
+            await m.addColumn(
+              expensesTable,
+              expensesTable.ofRecordTypeId,
+            );
+          }
+        },
+      );
 
   // The method for listing all the expenses present in the database
   // Future<List<ExpensesTableData>> getAllExpenses() async {
   //   return await select(expensesTable).get();
   // }
+
+  // ####################### EXPENSE-DATA TABLE QUERIES ########################
 
   Stream<List<ExpensesTableData>> getAllExpenses() {
     return (select(expensesTable)
@@ -50,4 +72,6 @@ class AppDb extends _$AppDb {
   Future<bool> updatingTheExpenses(ExpensesTableCompanion entity) async {
     return await update(expensesTable).replace(entity);
   }
+
+// ##################### RECORD TYPE-DATA TABLE QUERIES ######################
 }
