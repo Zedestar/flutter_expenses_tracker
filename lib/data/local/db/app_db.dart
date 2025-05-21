@@ -51,7 +51,7 @@ class AppDb extends _$AppDb {
 
   Stream<List<ExpensesTableData>> getAllExpenses() {
     return (select(expensesTable)
-          ..orderBy([(tbl) => OrderingTerm.desc(tbl.expensesDate)]))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.id)]))
         .watch();
   }
 
@@ -74,4 +74,12 @@ class AppDb extends _$AppDb {
   }
 
 // ##################### RECORD TYPE-DATA TABLE QUERIES ######################
+
+  Stream<List<RecordTypeData>> getAllRecordTypes() {
+    return (select(recordType)
+          ..orderBy([(item) => OrderingTerm.desc(item.recordTimeCreated)]))
+        .watch();
+  }
+
+  // Future<int> insertingNewRecordType(RecordTypeCompanion entity) async {}
 }

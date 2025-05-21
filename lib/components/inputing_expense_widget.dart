@@ -1,4 +1,5 @@
 import 'package:expenses_tracker/components/alert_dialogy.dart';
+import 'package:expenses_tracker/components/banner_for_displaying_message.dart';
 import 'package:expenses_tracker/components/customize_date_widget.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
@@ -73,22 +74,12 @@ class _AddingExpensesState extends State<AddingExpenses> {
     );
     Provider.of<AppDatabaseProvider>(context, listen: false)
         .db
-        .insertingNewExpense(newExpense)
-        .then((value) {
-      ScaffoldMessenger.of(context).showMaterialBanner(
-        MaterialBanner(
-          content: Text("The new expense is added: $value"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-              },
-              child: Text("Close"),
-            ),
-          ],
-        ),
-      );
-    });
+        .insertingNewExpense(newExpense);
+    customMaterialBanner(
+        context: context,
+        message: "${newExpense.expensesName} successful added",
+        actionText: "Close");
+
     Navigator.pop(context);
   }
 
