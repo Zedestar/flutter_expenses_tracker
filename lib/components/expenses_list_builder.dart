@@ -31,7 +31,7 @@ class _ExpensesListState extends State<ExpensesList> {
             expensesStream: db.expensesAmountStream,
           ),
           StreamedColumnForExpenseItems(
-            expensesList: db.db.getAllExpenses(),
+            expensesList: db.db.getAllExpenses(db.recordTypeId!),
           ),
         ],
       ),

@@ -1,6 +1,8 @@
 import 'package:expenses_tracker/components/expense_item.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
+import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StreamedColumnForExpenseItems extends StatefulWidget {
   const StreamedColumnForExpenseItems({super.key, required this.expensesList});
@@ -29,7 +31,7 @@ class _StreamedColumnForExpenseItemsState
             return Center(
               child: Text("Error: ${snapshot.error}"),
             );
-          } else if (snapshot.hasData) {
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             List<ExpensesTableData> expensesList = snapshot.data!;
             return ListView.builder(
                 itemCount: expensesList.length,
@@ -40,7 +42,8 @@ class _StreamedColumnForExpenseItemsState
                 });
           } else {
             return Center(
-              child: Text("No data found"),
+              child: Text(
+                  "No data found ${Provider.of<AppDatabaseProvider>(context).recordTypeId}"),
             );
           }
         },

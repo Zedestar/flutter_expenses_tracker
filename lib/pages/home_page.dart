@@ -3,6 +3,8 @@ import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/inputinng_record_type.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -11,12 +13,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void _showTheModalSheet() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) {
+        return AddingRecordType();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final db = Provider.of<AppDatabaseProvider>(context, listen: false);
     return Scaffold(
       body: StreamedColumnForRecordTypeItems(
         recordTypeList: db.db.getAllRecordTypes(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showTheModalSheet,
+        child: Icon(Icons.add),
       ),
     );
   }

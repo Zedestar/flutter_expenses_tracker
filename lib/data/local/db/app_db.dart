@@ -49,8 +49,9 @@ class AppDb extends _$AppDb {
 
   // ####################### EXPENSE-DATA TABLE QUERIES ########################
 
-  Stream<List<ExpensesTableData>> getAllExpenses() {
+  Stream<List<ExpensesTableData>> getAllExpenses(int recordTypeId) {
     return (select(expensesTable)
+          ..where((item) => item.ofRecordTypeId.equals(recordTypeId))
           ..orderBy([(tbl) => OrderingTerm.desc(tbl.id)]))
         .watch();
   }

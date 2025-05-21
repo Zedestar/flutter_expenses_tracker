@@ -1,4 +1,5 @@
 import 'package:expenses_tracker/components/inputinng_record_type.dart';
+import 'package:expenses_tracker/components/record_type_item.dart';
 import 'package:flutter/material.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 
@@ -45,7 +46,9 @@ class _StreamedColumnForRecordTypeItemsState
             return ListView.builder(
               itemCount: recordTypeList.length,
               itemBuilder: (context, index) {
-                return Text("Item is the database");
+                return RecordTypeItem(
+                  recordType: recordTypeList[index],
+                );
               },
             );
           } else {

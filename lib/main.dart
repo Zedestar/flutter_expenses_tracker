@@ -1,4 +1,4 @@
-import 'package:expenses_tracker/pages/expenses.dart';
+import 'package:expenses_tracker/pages/expenses_page.dart';
 import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:expenses_tracker/provider/theme_provider.dart';
 import 'package:expenses_tracker/routes/route_generator.dart';

@@ -67,8 +67,9 @@ class _AddingExpensesState extends State<AddingExpenses> {
       expensesCategory: drift.Value(_categorySelected!),
       expensesAmount: drift.Value(theAmount!),
       expensesDate: drift.Value(theDatePicked!),
-      expensesDescription: drift.Value(
-        _descriptionController.text.trim(),
+      expensesDescription: drift.Value(_descriptionController.text.trim()),
+      ofRecordTypeId: drift.Value(
+        Provider.of<AppDatabaseProvider>(context, listen: false).recordTypeId,
       ),
     );
     Provider.of<AppDatabaseProvider>(context, listen: false)
