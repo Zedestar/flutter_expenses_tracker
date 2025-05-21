@@ -80,5 +80,7 @@ class AppDb extends _$AppDb {
         .watch();
   }
 
-  // Future<int> insertingNewRecordType(RecordTypeCompanion entity) async {}
+  Future<int> insertingNewRecordType(RecordTypeCompanion entity) async {
+    return await into(recordType).insert(entity);
+  }
 }
