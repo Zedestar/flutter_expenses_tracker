@@ -1,6 +1,5 @@
 import 'package:expenses_tracker/components/expenses_list_builder.dart';
 import 'package:expenses_tracker/components/inputing_expense_widget.dart';
-import 'package:expenses_tracker/data/expenses_data.dart';
 import 'package:expenses_tracker/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

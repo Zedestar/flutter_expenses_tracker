@@ -2,16 +2,18 @@ import 'package:expenses_tracker/components/expense_item.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:flutter/material.dart';
 
-class StreamedColumnForItems extends StatefulWidget {
-  const StreamedColumnForItems({super.key, required this.expensesList});
+class StreamedColumnForExpenseItems extends StatefulWidget {
+  const StreamedColumnForExpenseItems({super.key, required this.expensesList});
   // here will be used to pass the stream of the expenses list
   final Stream<List<ExpensesTableData>> expensesList;
 
   @override
-  State<StreamedColumnForItems> createState() => _StreamedColumnForItemsState();
+  State<StreamedColumnForExpenseItems> createState() =>
+      _StreamedColumnForExpenseItemsState();
 }
 
-class _StreamedColumnForItemsState extends State<StreamedColumnForItems> {
+class _StreamedColumnForExpenseItemsState
+    extends State<StreamedColumnForExpenseItems> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

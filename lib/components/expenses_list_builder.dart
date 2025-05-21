@@ -30,7 +30,7 @@ class _ExpensesListState extends State<ExpensesList> {
           StreamedBarChart(
             expensesStream: db.expensesAmountStream,
           ),
-          StreamedColumnForItems(
+          StreamedColumnForExpenseItems(
             expensesList: db.db.getAllExpenses(),
           ),
         ],

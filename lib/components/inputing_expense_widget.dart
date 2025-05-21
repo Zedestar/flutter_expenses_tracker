@@ -2,7 +2,6 @@ import 'package:expenses_tracker/components/alert_dialogy.dart';
 import 'package:expenses_tracker/components/banner_for_displaying_message.dart';
 import 'package:expenses_tracker/components/customize_date_widget.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
-import 'package:expenses_tracker/provider/expenses_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as drift;

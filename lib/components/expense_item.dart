@@ -1,7 +1,4 @@
 import 'package:expenses_tracker/data/local/db/app_db.dart';
-import 'package:expenses_tracker/data/local/entity/expenses_entity.dart';
-import 'package:expenses_tracker/model/expense.dart';
-import 'package:expenses_tracker/pages/view_expenses_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

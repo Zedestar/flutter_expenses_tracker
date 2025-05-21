@@ -76,8 +76,7 @@ class AppDb extends _$AppDb {
 // ##################### RECORD TYPE-DATA TABLE QUERIES ######################
 
   Stream<List<RecordTypeData>> getAllRecordTypes() {
-    return (select(recordType)
-          ..orderBy([(item) => OrderingTerm.desc(item.recordTimeCreated)]))
+    return (select(recordType)..orderBy([(item) => OrderingTerm.desc(item.id)]))
         .watch();
   }
 
