@@ -5,41 +5,41 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class ExpenseItem extends StatelessWidget {
-  ExpenseItem({
+class IncomeItem extends StatelessWidget {
+  IncomeItem({
     super.key,
-    required this.expense,
+    required this.income,
   });
 
-  final ExpensesTableData expense;
+  final IncomeTableData income;
   final formatter = DateFormat.yMd();
   final categoricalItem = {
-    "food": Icons.food_bank,
-    "travel": Icons.flight_takeoff,
-    "leisure": Icons.movie,
-    "work": Icons.work,
+    "maize": Icons.food_bank,
+    "pigeon peas": Icons.flight_takeoff,
+    "sunflower": Icons.movie,
+    "others": Icons.work,
   };
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(expense.id),
+      key: ValueKey(income.id),
       onDismissed: (direction) {
         Provider.of<AppDatabaseProvider>(context, listen: false)
             .db
-            .deleteExpense(expense.id);
+            .deleteExpense(income.id);
         customMaterialBanner(
             context: context,
-            message: "Item ${expense.expensesName} deleted successful",
+            message: "Item ${income.incomeName} deleted successful",
             actionText: "OK");
       },
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            '/view-expenses',
-            arguments: expense.id,
-          );
+          // Navigator.pushNamed(
+          //   context,
+          //   '/view-expenses',
+          //   arguments: expense.id,
+          // );
         },
         child: Card(
           child: Padding(
@@ -52,11 +52,11 @@ class ExpenseItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      expense.expensesName.toString(),
+                      income.incomeName.toString(),
                     ),
                     Spacer(),
                     Text(
-                      expense.expensesAmount.toString(),
+                      income.incomeAmount.toString(),
                     ),
                   ],
                 ),
@@ -64,13 +64,13 @@ class ExpenseItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      expense.expensesCategory.toString(),
+                      income.incomeCategory.toString(),
                     ),
                     Spacer(),
                     Row(
                       children: [
-                        Icon(categoricalItem[expense.expensesCategory]),
-                        Text(formatter.format(expense.expensesDate).toString()),
+                        Icon(categoricalItem[income.incomeCategory]),
+                        Text(formatter.format(income.incomeDate).toString()),
                       ],
                     ),
                   ],

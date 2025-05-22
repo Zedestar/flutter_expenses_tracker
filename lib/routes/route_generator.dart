@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/pages/analysis_page.dart';
 import 'package:expenses_tracker/pages/expenses_page.dart';
 import 'package:expenses_tracker/pages/home_page.dart';
 import 'package:expenses_tracker/pages/income_page.dart';
@@ -21,6 +22,8 @@ class RouteGenerator {
         }
       case '/income-page':
         return MaterialPageRoute(builder: (_) => const IncomePage());
+      case '/analysis-page':
+        return MaterialPageRoute(builder: (_) => const AnalysisPage());
       default:
         return _errorRoute();
     }

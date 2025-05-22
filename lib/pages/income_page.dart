@@ -22,11 +22,24 @@ class _IncomePageState extends State<IncomePage> {
         activeIcon: Icons.close,
         children: [
           SpeedDialChild(
-              child: Icon(Icons.money_off),
-              label: "Expense Page",
-              onTap: () {
-                Navigator.of(context).pop();
-              })
+            child: Icon(Icons.money_off),
+            label: "Expense Page",
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.analytics_sharp),
+            label: "Analyize",
+            onTap: () {
+              Navigator.of(context).pushNamed('/analysis-page');
+            },
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.add),
+            label: "Add Income",
+            onTap: () {},
+          )
         ],
       ),
     );
