@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/components/appBar_widget.dart';
 import 'package:expenses_tracker/components/customized_column_for_recordType_listing.dart';
 import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final db = Provider.of<AppDatabaseProvider>(context, listen: false);
     return Scaffold(
+      appBar: buildResponsiveAppBar(
+        context: context,
+        appBarTitle: 'Home Page',
+      ),
       body: StreamedColumnForRecordTypeItems(
         recordTypeList: db.db.getAllRecordTypes(),
       ),

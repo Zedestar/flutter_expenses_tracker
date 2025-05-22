@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart' as drift;
+import 'package:expenses_tracker/components/appBar_widget.dart';
 import 'package:expenses_tracker/components/themed_contaier.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:expenses_tracker/functions/customized_styled_row_for_showing_item.dart';
@@ -47,17 +48,16 @@ class _ViewExpensesState extends State<ViewExpenses> {
     _titleController.dispose();
     _amountController.dispose();
     _descriptionController.dispose();
-    // _db.close();
+    ;
   }
 
   @override
   Widget build(BuildContext context) {
-    // final ExpensesTableData theExpenseItem = _db.getExpenseById(widget.id);
     final db = Provider.of<AppDatabaseProvider>(context, listen: false).db;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("The expenses"),
-      ),
+      appBar: buildResponsiveAppBar(
+          context: context,
+          appBarTitle: "The expense ${_titleController.text}"),
       body: edit
           ? Center(
               child: ThemedContainer(

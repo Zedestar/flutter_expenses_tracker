@@ -1,8 +1,10 @@
+import 'package:expenses_tracker/components/appBar_widget.dart';
 import 'package:expenses_tracker/components/expenses_list_builder.dart';
 import 'package:expenses_tracker/components/inputing_expense_widget.dart';
 import 'package:expenses_tracker/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({super.key});
@@ -26,35 +28,36 @@ class _ExpensesPageState extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Expeses Tracker",
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _showTheModalSheet();
-            },
-            icon: Icon(
-              Icons.add,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              Provider.of<AppThemeProvider>(context, listen: false)
-                  .tooglingTheme();
-            },
-            icon: Icon(
-              Provider.of<AppThemeProvider>(context, listen: false)
-                      .isItDarkOrLight
-                  ? Icons.light_mode
-                  : Icons.dark_mode,
-            ),
-          ),
-        ],
+      appBar: buildResponsiveAppBar(
+        context: context,
+        appBarTitle: 'Expenses Page',
       ),
       body: ExpensesList(),
+      floatingActionButton: SpeedDial(
+        icon: Icons.menu,
+        activeIcon: Icons.close,
+        // backgroundColor: Colors.blue,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.home),
+            label: 'Home page',
+            onTap: () {
+              Navigator.of(context).pushNamed('/');
+            },
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.attach_money),
+            label: 'Income Page',
+            onTap: () {
+              Navigator.of(context).pushNamed('/income-page');
+            },
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.add),
+              label: 'Add Expense',
+              onTap: _showTheModalSheet),
+        ],
+      ),
     );
   }
 }

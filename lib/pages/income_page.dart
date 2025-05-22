@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/components/appBar_widget.dart';
 import 'package:flutter/material.dart';
 
 class IncomePage extends StatefulWidget {
@@ -10,13 +11,11 @@ class IncomePage extends StatefulWidget {
 class _IncomePageState extends State<IncomePage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        "Income Page",
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+    return Scaffold(
+      appBar:
+          buildResponsiveAppBar(context: context, appBarTitle: "Incomes page"),
+      body: Center(
+        child: Text('Income Page'),
       ),
     );
   }
