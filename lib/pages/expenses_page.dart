@@ -36,13 +36,12 @@ class _ExpensesPageState extends State<ExpensesPage> {
       floatingActionButton: SpeedDial(
         icon: Icons.menu,
         activeIcon: Icons.close,
-        // backgroundColor: Colors.blue,
         children: [
           SpeedDialChild(
             child: Icon(Icons.home),
             label: 'Home page',
             onTap: () {
-              Navigator.of(context).pushNamed('/');
+              Navigator.of(context).pop();
             },
           ),
           SpeedDialChild(

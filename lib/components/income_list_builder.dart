@@ -1,24 +1,19 @@
-import 'package:expenses_tracker/components/customized_column_showing_itemsList.dart';
+import 'package:expenses_tracker/components/customized_charts_streamed_widget.dart';
 import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'customized_charts_streamed_widget.dart';
-
-class ExpensesList extends StatefulWidget {
-  const ExpensesList({
-    super.key,
-  });
+class IncomeList extends StatefulWidget {
+  const IncomeList({super.key});
 
   @override
-  State<ExpensesList> createState() => _ExpensesListState();
+  State<IncomeList> createState() => _IncomeListState();
 }
 
-class _ExpensesListState extends State<ExpensesList> {
+class _IncomeListState extends State<IncomeList> {
   @override
   Widget build(BuildContext context) {
     final db = Provider.of<AppDatabaseProvider>(context, listen: false);
-
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -26,9 +21,9 @@ class _ExpensesListState extends State<ExpensesList> {
           StreamedBarChart(
             expensesStream: db.expensesAmountStream,
           ),
-          StreamedColumnForExpenseItems(
-            expensesList: db.db.getAllExpenses(db.recordTypeId!),
-          ),
+          // StreamedColumnForExpenseItems(
+          //   expensesList: db.db.getAllExpenses(db.recordTypeId!),
+          // ),
         ],
       ),
     );

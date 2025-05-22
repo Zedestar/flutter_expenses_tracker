@@ -15,12 +15,12 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(tables: [ExpensesTable, RecordType])
+@DriftDatabase(tables: [ExpensesTable, RecordType, IncomeTable])
 class AppDb extends _$AppDb {
   AppDb() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -38,6 +38,9 @@ class AppDb extends _$AppDb {
               expensesTable,
               expensesTable.ofRecordTypeId,
             );
+          }
+          if (from == 2 && to == 3) {
+            await m.createTable(incomeTable);
           }
         },
       );
@@ -83,5 +86,17 @@ class AppDb extends _$AppDb {
 
   Future<int> insertingNewRecordType(RecordTypeCompanion entity) async {
     return await into(recordType).insert(entity);
+  }
+
+  // ##################### RECORD TYPE-DATA TABLE QUERIES ######################
+  Stream<List<IncomeTableData>> getAllIncome(int recordTypeId) {
+    return (select(incomeTable)
+          ..where((item) => item.ofRecordTypeId.equals(recordTypeId))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.id)]))
+        .watch();
+  }
+
+  Future<int> insertingNewIncome(IncomeTableCompanion entity) async {
+    return await into(incomeTable).insert(entity);
   }
 }

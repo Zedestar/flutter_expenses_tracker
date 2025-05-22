@@ -33,3 +33,21 @@ class ExpensesTable extends Table {
       .nullable()
       .named("of_record_type_id")();
 }
+
+class IncomeTable extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get incomeName =>
+      text().withLength(min: 1, max: 100).named("income_name")();
+  TextColumn get incomeDescription =>
+      text().withLength(min: 1, max: 200).named("income_description")();
+  TextColumn get incomeCategory =>
+      text().withLength(min: 1, max: 100).named("income_category")();
+  RealColumn get incomeAmount => real().named("income_amount")();
+  DateTimeColumn get incomeDate => dateTime().named("income_date")();
+
+  // Connecting the income table to the record type table
+  IntColumn get ofRecordTypeId => integer()
+      .references(RecordType, #id, onDelete: KeyAction.cascade)
+      .nullable()
+      .named("of_record_type_id")();
+}
