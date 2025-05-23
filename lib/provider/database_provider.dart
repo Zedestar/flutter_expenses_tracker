@@ -1,5 +1,6 @@
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AppDatabaseProvider with ChangeNotifier {
   AppDatabaseProvider() {
@@ -25,7 +26,6 @@ class AppDatabaseProvider with ChangeNotifier {
       double totalTravel = 0;
       double totalLeisure = 0;
       double totalWork = 0;
-
       for (var expense in expenses) {
         switch (expense.expensesCategory) {
           case "food":
@@ -76,6 +76,14 @@ class AppDatabaseProvider with ChangeNotifier {
 
       return [totalAmount, totalFood, totalTravel, totalLeisure, totalWork];
     });
+  }
+
+  Stream<List<double>> get combinedTotalsStream {
+    return Rx.combineLatest2<List<double>, List<double>, List<double>>(
+      expensesAmountStream,
+      incomeAmountStream,
+      (expenses, income) => [expenses[0], income[0]],
+    );
   }
 
   @override
