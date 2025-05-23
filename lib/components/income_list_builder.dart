@@ -1,6 +1,5 @@
 import 'package:expenses_tracker/components/categories_list.dart';
 import 'package:expenses_tracker/components/customized_charts_streamed_widget.dart';
-// import 'package:expenses_tracker/components/customized_column_showing_expense_itemsList.dart';
 import 'package:expenses_tracker/components/customized_column_showing_income_itemsList.dart';
 import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class _IncomeListState extends State<IncomeList> {
         children: [
           Text("Expenses Chart"),
           StreamedBarChart(
-            expensesStream: db.expensesAmountStream,
+            expensesStream: db.incomeAmountStream,
             categoires: InputCategories,
           ),
           StreamedColumnForIncomeItem(

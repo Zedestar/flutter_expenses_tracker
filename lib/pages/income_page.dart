@@ -25,8 +25,10 @@ class _IncomePageState extends State<IncomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          buildResponsiveAppBar(context: context, appBarTitle: "Incomes page"),
+      appBar: buildResponsiveAppBar(
+        context: context,
+        appBarTitle: "Incomes page",
+      ),
       body: IncomeList(),
       floatingActionButton: SpeedDial(
         icon: Icons.menu,

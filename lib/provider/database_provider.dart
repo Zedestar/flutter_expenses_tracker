@@ -48,6 +48,36 @@ class AppDatabaseProvider with ChangeNotifier {
     });
   }
 
+  Stream<List<double>> get incomeAmountStream {
+    return _db.getAllIncome(_recordTypeId!).map((incomes) {
+      double totalAmount = 0;
+      double totalFood = 0;
+      double totalTravel = 0;
+      double totalLeisure = 0;
+      double totalWork = 0;
+
+      for (var income in incomes) {
+        switch (income.incomeCategory) {
+          case "mahindi":
+            totalFood += income.incomeAmount;
+            break;
+          case "alizeti":
+            totalTravel += income.incomeAmount;
+            break;
+          case "mbaazi":
+            totalLeisure += income.incomeAmount;
+            break;
+          case "others":
+            totalWork += income.incomeAmount;
+            break;
+        }
+        totalAmount += income.incomeAmount;
+      }
+
+      return [totalAmount, totalFood, totalTravel, totalLeisure, totalWork];
+    });
+  }
+
   @override
   void dispose() {
     _db.close();
