@@ -27,7 +27,7 @@ class IncomeItem extends StatelessWidget {
       onDismissed: (direction) {
         Provider.of<AppDatabaseProvider>(context, listen: false)
             .db
-            .deleteExpense(income.id);
+            .deleteIncome(income.id);
         customMaterialBanner(
             context: context,
             message: "Item ${income.incomeName} deleted successful",
@@ -35,11 +35,11 @@ class IncomeItem extends StatelessWidget {
       },
       child: GestureDetector(
         onTap: () {
-          // Navigator.pushNamed(
-          //   context,
-          //   '/view-expenses',
-          //   arguments: expense.id,
-          // );
+          Navigator.pushNamed(
+            context,
+            '/view-income',
+            arguments: income.id,
+          );
         },
         child: Card(
           child: Padding(

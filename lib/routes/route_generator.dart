@@ -3,6 +3,7 @@ import 'package:expenses_tracker/pages/expenses_page.dart';
 import 'package:expenses_tracker/pages/home_page.dart';
 import 'package:expenses_tracker/pages/income_page.dart';
 import 'package:expenses_tracker/pages/view_expenses_page.dart';
+import 'package:expenses_tracker/pages/view_income_page.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -17,6 +18,12 @@ class RouteGenerator {
       case '/view-expenses':
         if (args is int) {
           return MaterialPageRoute(builder: (_) => ViewExpenses(id: args));
+        } else {
+          return _errorRoute();
+        }
+      case '/view-income':
+        if (args is int) {
+          return MaterialPageRoute(builder: (_) => ViewIncome(id: args));
         } else {
           return _errorRoute();
         }

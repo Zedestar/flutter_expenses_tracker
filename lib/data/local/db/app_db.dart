@@ -96,7 +96,22 @@ class AppDb extends _$AppDb {
         .watch();
   }
 
+  Future<IncomeTableData> getIcomeById(int id) async {
+    return await (select(incomeTable)..where((item) => item.id.equals(id)))
+        .getSingle();
+  }
+
   Future<int> insertingNewIncome(IncomeTableCompanion entity) async {
     return await into(incomeTable).insert(entity);
+  }
+
+  Future<int> deleteIncome(int incomeId) async {
+    return await (delete(incomeTable)
+          ..where((item) => item.id.equals(incomeId)))
+        .go();
+  }
+
+  Future<bool> updateIncomeItem(IncomeTableCompanion entity) async {
+    return await update(incomeTable).replace(entity);
   }
 }
