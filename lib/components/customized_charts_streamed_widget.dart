@@ -4,9 +4,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class StreamedBarChart extends StatefulWidget {
-  const StreamedBarChart({super.key, required this.expensesStream});
+  const StreamedBarChart(
+      {super.key, required this.expensesStream, required this.categoires});
 
   final Stream<List<double>>? expensesStream;
+  final List<String> categoires;
 // here what will be passed is from the database provider class is the method the returns the totals of each category
 
   @override
@@ -41,7 +43,7 @@ class _StreamedBarChartState extends State<StreamedBarChart> {
                             sideTitles: SideTitles(
                               showTitles: true,
                               getTitlesWidget: (value, meta) {
-                                var labels = categories;
+                                var labels = widget.categoires;
                                 return Text(
                                   labels[value.toInt()]
                                       .toString()

@@ -1,3 +1,4 @@
+import 'package:expenses_tracker/components/categories_list.dart';
 import 'package:expenses_tracker/components/customized_column_showing_expense_itemsList.dart';
 import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _ExpensesListState extends State<ExpensesList> {
           Text("Expenses Chart"),
           StreamedBarChart(
             expensesStream: db.expensesAmountStream,
+            categoires: ExpensesCategories,
           ),
           StreamedColumnForExpenseItems(
             expensesList: db.db.getAllExpenses(db.recordTypeId!),

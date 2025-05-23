@@ -10,15 +10,15 @@ import '../provider/database_provider.dart';
 import 'customized_text_input_field.dart';
 import 'dropdown_category.dart';
 
-class AddingExpenses extends StatefulWidget {
-  const AddingExpenses({super.key});
+class AddingIncome extends StatefulWidget {
+  const AddingIncome({super.key});
   @override
-  State<AddingExpenses> createState() {
-    return _AddingExpensesState();
+  State<AddingIncome> createState() {
+    return _AddingIncomeState();
   }
 }
 
-class _AddingExpensesState extends State<AddingExpenses> {
+class _AddingIncomeState extends State<AddingIncome> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -63,22 +63,22 @@ class _AddingExpensesState extends State<AddingExpenses> {
       return;
     }
 
-    final newExpense = ExpensesTableCompanion(
-      expensesName: drift.Value(_titleController.text.trim()),
-      expensesCategory: drift.Value(_categorySelected!),
-      expensesAmount: drift.Value(theAmount!),
-      expensesDate: drift.Value(theDatePicked!),
-      expensesDescription: drift.Value(_descriptionController.text.trim()),
+    final newIncome = IncomeTableCompanion(
+      incomeName: drift.Value(_titleController.text.trim()),
+      incomeCategory: drift.Value(_categorySelected!),
+      incomeAmount: drift.Value(theAmount!),
+      incomeDate: drift.Value(theDatePicked!),
+      incomeDescription: drift.Value(_descriptionController.text.trim()),
       ofRecordTypeId: drift.Value(
         Provider.of<AppDatabaseProvider>(context, listen: false).recordTypeId,
       ),
     );
     Provider.of<AppDatabaseProvider>(context, listen: false)
         .db
-        .insertingNewExpense(newExpense);
+        .insertingNewIncome(newIncome);
     customMaterialBanner(
         context: context,
-        message: "${newExpense.expensesName} successful added",
+        message: "${newIncome.incomeName} successful added",
         actionText: "Close");
 
     Navigator.pop(context);
@@ -103,15 +103,15 @@ class _AddingExpensesState extends State<AddingExpenses> {
             children: [
               CustomedTextInputField(
                 descriptionController: _titleController,
-                textLabel: Text("Expenses Name"),
-                textHint: "Enter the name of the expenses",
+                textLabel: Text("Income Name"),
+                textHint: "Enter the name of the Income",
                 textInputType: TextInputType.text,
                 maxlength: 100,
               ),
               CustomedTextInputField(
                 descriptionController: _descriptionController,
                 textLabel: Text("Description"),
-                textHint: "Enter the expense description",
+                textHint: "Enter the income description",
                 textInputType: TextInputType.text,
                 maxlength: 100,
               ),
@@ -134,20 +134,21 @@ class _AddingExpensesState extends State<AddingExpenses> {
                 ],
               ),
               TheDropdownCategory(
-                  theFunctionToSetCategory: _setCategory,
-                  categorySelected: _categorySelected,
-                  categories: ExpensesCategories),
+                theFunctionToSetCategory: _setCategory,
+                categorySelected: _categorySelected,
+                categories: InputCategories,
+              ),
               Spacer(),
               Row(
                 children: [
                   ElevatedButton(
                     onPressed: _validateFormAnsSaveData,
                     child: Text(
-                      "Add Expenses",
+                      "Add Income",
                     ),
                   ),
                   Spacer(),
-                  ElevatedButton(
+                  OutlinedButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },

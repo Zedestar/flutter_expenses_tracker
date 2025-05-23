@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart' as drift;
 import 'package:expenses_tracker/components/appBar_widget.dart';
+import 'package:expenses_tracker/components/categories_list.dart';
 import 'package:expenses_tracker/components/themed_contaier.dart';
 import 'package:expenses_tracker/data/local/db/app_db.dart';
 import 'package:expenses_tracker/functions/customized_styled_row_for_showing_item.dart';
@@ -93,6 +94,7 @@ class _ViewExpensesState extends State<ViewExpenses> {
                           });
                         },
                         categorySelected: _categorySelected,
+                        categories: ExpensesCategories,
                       ),
                       TextButton(
                         onPressed: () async {

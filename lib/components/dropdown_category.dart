@@ -3,13 +3,16 @@ import 'package:expenses_tracker/functions/function_taking_one_parameter.dart';
 import 'package:flutter/material.dart';
 
 class TheDropdownCategory extends StatefulWidget {
-  TheDropdownCategory(
-      {super.key,
-      required this.theFunctionToSetCategory,
-      required this.categorySelected});
+  const TheDropdownCategory({
+    super.key,
+    required this.theFunctionToSetCategory,
+    required this.categorySelected,
+    required this.categories,
+  });
 
   final FunctionWithOneParameter theFunctionToSetCategory;
   final String? categorySelected;
+  final List<String> categories;
 
   @override
   State<TheDropdownCategory> createState() => _TheDropdownCategoryState();
@@ -32,7 +35,9 @@ class _TheDropdownCategoryState extends State<TheDropdownCategory> {
         ],
       ),
       child: DropdownButton(
-        icon: const Icon(Icons.arrow_drop_down, color: Colors.blueAccent),
+        icon: const Icon(
+          Icons.arrow_drop_down,
+        ),
         isExpanded: true,
         borderRadius: BorderRadius.circular(10),
         hint: Text(
@@ -44,7 +49,7 @@ class _TheDropdownCategoryState extends State<TheDropdownCategory> {
             fontSize: 16,
           ),
         ),
-        items: categories
+        items: widget.categories
             .map(
               (element) => DropdownMenuItem(
                 value: element,
