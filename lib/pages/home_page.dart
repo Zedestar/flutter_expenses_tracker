@@ -15,13 +15,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void _showTheModalSheet() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (ctx) {
-        return AddingRecordType();
-      },
-    );
+    // showModalBottomSheet(
+    //   isScrollControlled: true,
+    //   context: context,
+    //   builder: (ctx) {
+    //     return AddingRecordType();
+    //   },
+    // );
+    Navigator.pushNamed(context, '/developer-page');
   }
 
   @override

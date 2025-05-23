@@ -82,6 +82,11 @@ class _AnalysisPageState extends State<AnalysisPage> {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
     );
   }
 }
