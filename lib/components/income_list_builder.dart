@@ -22,7 +22,7 @@ class _IncomeListState extends State<IncomeList> {
           Text("Expenses Chart"),
           StreamedBarChart(
             expensesStream: db.incomeAmountStream,
-            categoires: InputCategories,
+            categoires: inputCategories,
           ),
           StreamedColumnForIncomeItem(
             incomeList: db.db.getAllIncome(db.recordTypeId!),

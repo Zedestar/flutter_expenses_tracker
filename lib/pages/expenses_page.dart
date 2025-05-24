@@ -1,9 +1,9 @@
 import 'package:expenses_tracker/components/appBar_widget.dart';
 import 'package:expenses_tracker/components/expenses_list_builder.dart';
 import 'package:expenses_tracker/components/inputing_expense_widget.dart';
-import 'package:expenses_tracker/provider/theme_provider.dart';
+// import 'package:expenses_tracker/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class ExpensesPage extends StatefulWidget {

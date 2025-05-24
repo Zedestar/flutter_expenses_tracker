@@ -136,7 +136,7 @@ class _AddingIncomeState extends State<AddingIncome> {
               TheDropdownCategory(
                 theFunctionToSetCategory: _setCategory,
                 categorySelected: _categorySelected,
-                categories: InputCategories,
+                categories: inputCategories,
               ),
               Spacer(),
               Row(

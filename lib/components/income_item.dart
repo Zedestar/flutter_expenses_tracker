@@ -14,10 +14,10 @@ class IncomeItem extends StatelessWidget {
   final IncomeTableData income;
   final formatter = DateFormat.yMd();
   final categoricalItem = {
-    "maize": Icons.food_bank,
-    "pigeon peas": Icons.flight_takeoff,
-    "sunflower": Icons.movie,
-    "others": Icons.work,
+    "mahindi": Icons.grass,
+    "alizeti": Icons.wb_sunny,
+    "mbaazi": Icons.spa,
+    "others": Icons.category,
   };
 
   @override

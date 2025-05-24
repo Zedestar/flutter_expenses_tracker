@@ -26,7 +26,7 @@ class _ExpensesListState extends State<ExpensesList> {
           Text("Expenses Chart"),
           StreamedBarChart(
             expensesStream: db.expensesAmountStream,
-            categoires: ExpensesCategories,
+            categoires: expensesCategories,
           ),
           StreamedColumnForExpenseItems(
             expensesList: db.db.getAllExpenses(db.recordTypeId!),

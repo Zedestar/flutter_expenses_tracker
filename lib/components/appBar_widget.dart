@@ -8,8 +8,6 @@ PreferredSizeWidget buildResponsiveAppBar(
   final isDark =
       Provider.of<AppThemeProvider>(context, listen: false).isItDarkOrLight;
 
-  ;
-
   return AppBar(
     title: Text(
       appBarTitle,

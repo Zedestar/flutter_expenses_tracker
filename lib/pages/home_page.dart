@@ -15,14 +15,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void _showTheModalSheet() {
-    // showModalBottomSheet(
-    //   isScrollControlled: true,
-    //   context: context,
-    //   builder: (ctx) {
-    //     return AddingRecordType();
-    //   },
-    // );
-    Navigator.pushNamed(context, '/developer-page');
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) {
+        return AddingRecordType();
+      },
+    );
   }
 
   @override
@@ -32,6 +31,33 @@ class _HomePageState extends State<HomePage> {
       appBar: buildResponsiveAppBar(
         context: context,
         appBarTitle: 'Home Page',
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+                child: SizedBox(
+              height: 300, // Control height here
+              width: double.infinity,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: Image.asset(
+                  "assets/images/expense.jpg",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )),
+            ListTile(
+              leading: Icon(Icons.developer_mode),
+              title: Text('Developer Info'),
+              onTap: () {
+                Navigator.pushNamed(context, '/developer-page');
+              },
+            ),
+            // Add more list tiles as needed
+          ],
+        ),
       ),
       body: StreamedColumnForRecordTypeItems(
         recordTypeList: db.db.getAllRecordTypes(),

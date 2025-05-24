@@ -1,4 +1,4 @@
-import 'package:expenses_tracker/components/categories_list.dart';
+// import 'package:expenses_tracker/components/categories_list.dart';
 import 'package:expenses_tracker/functions/function_taking_one_parameter.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +28,7 @@ class _TheDropdownCategoryState extends State<TheDropdownCategory> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey,
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

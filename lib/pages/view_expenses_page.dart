@@ -94,7 +94,7 @@ class _ViewExpensesState extends State<ViewExpenses> {
                           });
                         },
                         categorySelected: _categorySelected,
-                        categories: ExpensesCategories,
+                        categories: expensesCategories,
                       ),
                       TextButton(
                         onPressed: () async {

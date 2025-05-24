@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:expenses_tracker/components/appBar_widget.dart';
 import 'package:expenses_tracker/provider/database_provider.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +81,7 @@ class _AnalysisPageState extends State<AnalysisPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back),
         onPressed: () {
           Navigator.of(context).pop();
         },

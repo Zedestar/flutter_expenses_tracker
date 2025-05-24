@@ -92,7 +92,7 @@ class _ViewIncomeState extends State<ViewIncome> {
                           });
                         },
                         categorySelected: _categorySelected,
-                        categories: InputCategories,
+                        categories: inputCategories,
                       ),
                       TextButton(
                         onPressed: () async {
