@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: Image.asset(
-                  "assets/images/expense.jpg",
+                  "assets/images/expense.jpeg",
                   fit: BoxFit.cover,
                 ),
               ),
