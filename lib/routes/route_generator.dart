@@ -2,6 +2,7 @@ import 'package:expenses_tracker/pages/analysis_page.dart';
 import 'package:expenses_tracker/pages/developer_info_page.dart';
 import 'package:expenses_tracker/pages/expenses_page.dart';
 import 'package:expenses_tracker/pages/home_page.dart';
+import 'package:expenses_tracker/pages/how_to_use_the_app.dart';
 import 'package:expenses_tracker/pages/income_page.dart';
 import 'package:expenses_tracker/pages/view_expenses_page.dart';
 import 'package:expenses_tracker/pages/view_income_page.dart';
@@ -34,6 +35,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AnalysisPage());
       case '/developer-page':
         return MaterialPageRoute(builder: (_) => const DeveloperInfoPage());
+      case '/help-page':
+        return MaterialPageRoute(builder: (_) => const HowToUsePage());
       default:
         return _errorRoute();
     }

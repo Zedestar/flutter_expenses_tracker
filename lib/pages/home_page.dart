@@ -55,6 +55,13 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/developer-page');
               },
             ),
+            ListTile(
+              leading: Icon(Icons.help_center),
+              title: Text('Developer Info'),
+              onTap: () {
+                Navigator.pushNamed(context, '/help-page');
+              },
+            ),
             // Add more list tiles as needed
           ],
         ),
