@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.help_center),
-              title: Text('Developer Info'),
+              title: Text('Help and support'),
               onTap: () {
                 Navigator.pushNamed(context, '/help-page');
               },

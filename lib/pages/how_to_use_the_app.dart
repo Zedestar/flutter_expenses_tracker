@@ -5,39 +5,65 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 class HowToUsePage extends StatelessWidget {
   const HowToUsePage({super.key});
   final String markdownData = """
-# 💸 Expense Tracker App Guide
+# 🧙‍♂️💸 The Magical Expense Tracker Scroll
 
-Welcome to the **Expense Tracker App**! This guide will help you understand how to use the app effectively.
-
-## 🚀 Getting Started
-
-1. Open the Expense Tracker App.
-2. Create a new account or log in.
-3. Access your dashboard to view your financial overview.
-
-## ➕ Adding an Expense
-
-- Navigate to the **"Add Expense"** page.
-- Enter the **amount**, **category**, and **description**.
-- Click **"Save"** to record your expense.
-
-## 📈 Viewing Reports
-
-- Go to the **Reports** section.
-- View daily, weekly, or monthly summaries.
-- Filter by category or date range.
-
-## ⚙️ Settings
-
-- Update your **profile** and **budget limits**.
-- Change your **currency** and **language preferences**.
-
-## 🛟 Need Help?
-
-- Contact support at `support@expensetracker.com`
-- Visit our [Help Center](https://expensetracker.com/help)
+Welcome, brave budgeteer, to the **Enchanted Ledger of Gold**—also known as the **Expense Tracker App**! This mystical scroll shall unveil the secrets of mastering your income and expenses with ease and clarity.
 
 ---
+
+## ✨ Getting Started on Your Quest
+
+- 🌟 This wondrous app allows you to **record** your gold (income) and silver (expenses), and reveals a magical **summary chart** of your financial realm.
+- 🏠 The **Home Page** is your base camp. Here, you can begin your journey by tapping the **➕ icon** or the magical **“Populate”** button if your records are yet to begin.
+- 📜 Once you’ve conjured a record, simply **tap** it to explore the details further.
+- 💰 By default, you’ll enter the **Expenses Chamber**. Look to the **bottom right corner**, where a **mystic three-bar scroll** awaits—tap it to unveil new paths:
+  - **Add Expense** – To inscribe a new expense.
+  - **Income Page** – To travel to the treasury of earnings.
+  - **Home Page** – To return to your starting realm.
+
+---
+
+## ➕ Enchanting a New Expense
+
+- 🧾 Venture to the **“Add Expense”** portal.
+- 🪙 Enter the **amount**, choose a **category**, describe your quest (**description**), and specify the **date**.
+- 🔮 Tap the **“Add Expenses”** button to seal your entry.
+- 📊 Upon success, a **chart of elemental spending** shall appear, visualizing your expenditures in magical slices.
+
+---
+
+## ➕ Weaving in an Income
+
+- 🏆 Proceed to the **“Add Income”** portal.
+- 🧿 Fill in the **amount**, choose your **category**, share a **description**, and select the **date**.
+- 🎯 Tap **“Add Income”** to record your earnings.
+- 📈 Behold the **chart of riches**, showing you how your fortunes are growing.
+
+---
+
+## 📊 Summoning the Financial Report
+
+- 🔍 Visit the **Reports Sanctum**.
+- 🧙‍♂️ Here, the app unveils a **mystical pie chart** showing your **complete financial balance**—a tale of what’s been earned and what’s been spent.
+
+---
+
+## 🌙🌓 Shifting the Light
+
+- 🌗 Want to change your realm’s appearance? Tap the **sun** or **moon** icon in the AppBar to toggle between **Light Mode** (Day) and **Dark Mode** (Night).
+
+---
+
+## 🧭 In Need of Guidance?
+
+- 📬 Summon the sages at: `support@expensetracker.com`
+- 🏛️ Visit the **[Help Center](https://expensetracker.com/help)** for additional scrolls of wisdom.
+
+---
+
+May your finances flourish and your gold multiply. 🏹📘
+
+
 
 
 """;

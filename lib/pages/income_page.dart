@@ -43,7 +43,7 @@ class _IncomePageState extends State<IncomePage> {
           ),
           SpeedDialChild(
             child: Icon(Icons.analytics_sharp),
-            label: "Analyize",
+            label: "Report",
             onTap: () {
               Navigator.of(context).pushNamed('/analysis-page');
             },
