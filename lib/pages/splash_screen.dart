@@ -24,16 +24,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      // backgroundColor: Colors.blue,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.flutter_dash, size: 100, color: Colors.white),
+            ClipRect(
+              child: Image.asset(
+                "assets/images/icon.png",
+                fit: BoxFit.contain,
+              ),
+            ),
             SizedBox(height: 20),
-            CircularProgressIndicator(color: Colors.white),
+            CircularProgressIndicator(
+                // color: Colors.white,
+                ),
             SizedBox(height: 10),
-            Text('Loading...', style: TextStyle(color: Colors.white)),
+            Text(
+              'ZeddyNets',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ),
