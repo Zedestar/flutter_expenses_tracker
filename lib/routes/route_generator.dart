@@ -4,6 +4,7 @@ import 'package:expenses_tracker/pages/expenses_page.dart';
 import 'package:expenses_tracker/pages/home_page.dart';
 import 'package:expenses_tracker/pages/how_to_use_the_app.dart';
 import 'package:expenses_tracker/pages/income_page.dart';
+import 'package:expenses_tracker/pages/splash_screen.dart';
 import 'package:expenses_tracker/pages/view_expenses_page.dart';
 import 'package:expenses_tracker/pages/view_income_page.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      case '/splash_screen':
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case '/':
         return MaterialPageRoute(builder: (_) => const HomePage());
       case '/expenses-page':
